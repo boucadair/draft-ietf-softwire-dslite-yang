@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY % RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+]>
+<?rfc rfcedstyle="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc sortrefs="yes" ?>
+<?rfc toc="yes" ?>
+<?rfc tocompact="yes"?>
+<rfc category="std" docName="draft-ietf-softwire-dslite-yang-08"
+     ipr="trust200902">
+  <front>
+    <title abbrev="DS-Lite YANG">YANG Data Modules for the DS-Lite</title>
+
+    <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
+      <organization>Orange</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <city>Rennes</city>
+
+          <code>35000</code>
+
+          <country>France</country>
+        </postal>
+
+        <email>mohamed.boucadair@orange.com</email>
+      </address>
+    </author>
+
+    <author fullname="Christian Jacquenet" initials="C." surname="Jacquenet">
+      <organization>Orange</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <city>Rennes</city>
+
+          <code>35000</code>
+
+          <country>France</country>
+        </postal>
+
+        <email>christian.jacquenet@orange.com</email>
+      </address>
+    </author>
+
+    <author fullname="Senthil Sivakumar" initials="S." surname="Sivakumar">
+      <organization>Cisco Systems</organization>
+
+      <address>
+        <postal>
+          <street>7100-8 Kit Creek Road</street>
+
+          <!-- Reorder these if your country does things differently -->
+
+          <city>Research Triangle Park</city>
+
+          <region>North Carolina</region>
+
+          <code>27709</code>
+
+          <country>USA</country>
+        </postal>
+
+        <phone>+1 919 392 5158</phone>
+
+        <email>ssenthil@cisco.com</email>
+
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
+    <date day="" month="" year="" />
+
+    <area>Internet</area>
+
+    <keyword>IPv4 service continuity</keyword>
+
+    <keyword>IPv4 address exhaustion</keyword>
+
+    <keyword>Service Availability</keyword>
+
+    <keyword>Address sharing</keyword>
+
+    <keyword>IPv6</keyword>
+
+    <keyword>Reliability</keyword>
+
+    <keyword>IPv4 over IPv6</keyword>
+
+    <abstract>
+      <t>This document defines YANG modules for the DS-Lite Address Family
+      Transition Router (AFTR) and Basic Bridging BroadBand (B4) elements.</t>
+    </abstract>
+
+    <note title="Editorial Note (To be removed by RFC Editor)">
+      <t>Please update these statements with the RFC number to be assigned to
+      this document:<list style="symbols">
+          <t>"This version of this YANG module is part of RFC XXXX;"</t>
+
+          <t>"RFC XXXX: A YANG Data Model for Network Address Translation
+          (NAT) and Network Prefix Translation (NPT)";</t>
+
+          <t>"reference: RFC XXXX"</t>
+        </list></t>
+    </note>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>This document defines data models for DS-Lite <xref
+      target="RFC6333"></xref>, using the YANG data modeling language <xref
+      target="RFC7950"></xref>. Both the Address Family Transition Router
+      (AFTR) and Basic Bridging BroadBand (B4) elements are covered by this
+      specification. </t>
+
+      <t>As a reminder, <xref target="arch"></xref> illustrates an overview of
+      the DS-Lite architecture that involves AFTR and B4 elements.</t>
+
+      <t><figure align="center" anchor="arch"
+          title="DS-Lite Base Architecture">
+          <artwork><![CDATA[
+                   +-----------+
+                   |    Host   |
+                   +-----+-----+
+                         |192.0.2.1
+                         |
+                         |
+                         |192.0.2.2
+               +---------|---------+
+               |         |         |
+               |    Home router    |
+               |+--------+--------+|
+               ||       B4        ||
+               |+--------+--------+|
+               +--------|||--------+
+                        |||2001:db8:0:1::1
+                        |||
+                        |||<-IPv4-in-IPv6 softwire
+                        |||
+                 -------|||-------
+               /        |||        \
+              |   ISP core network  |
+               \        |||        /
+                 -------|||-------
+                        |||
+                        |||2001:db8:0:2::1
+               +--------|||--------+
+               |        AFTR       |
+               |+--------+--------+|
+               ||   Concentrator  ||
+               |+--------+--------+|
+               |       |NAT|       |
+               |       +-+-+       |
+               +---------|---------+
+                         |198.51.100.1
+                         |
+                 --------|--------
+               /         |         \
+              |       Internet      |
+               \         |         /
+                 --------|--------
+                         |
+                         |203.0.113.1
+                   +-----+-----+
+                   | IPv4 Host |
+                   +-----------+]]></artwork>
+        </figure>DS-Lite deployment considerations are discussed in <xref
+      target="RFC6908"></xref>.</t>
+
+      <t>This document follows the guidelines of <xref
+      target="RFC6087"></xref>, uses the common YANG types defined in <xref
+      target="RFC6991"></xref>, and adopts Network Management Datastore
+      Architecture (NMDA).</t>
+
+      <section title="Terminology">
+        <t>This document makes use of the terms defined in Section 3 of <xref
+        target="RFC6333"></xref>.</t>
+
+        <t>The terminology for describing YANG data modules is defined in
+        <xref target="RFC7950"></xref>.</t>
+      </section>
+
+      <section title="Tree Diagrams">
+        <t>The meaning of the symbols in these diagrams is as follows: <list
+            style="symbols">
+            <t>Brackets "[" and "]" enclose list keys.</t>
+
+            <t>Curly braces "{" and "}" contain names of optional features
+            that make the corresponding node conditional.</t>
+
+            <t>Abbreviations before data node names: "rw" means configuration
+            (read-write), "ro" state data (read-only).</t>
+
+            <t>Symbols after data node names: "?" means an optional node, "!"
+            a container with presence, and "*" denotes a "list" or
+            "leaf-list".</t>
+
+            <t>Parentheses enclose choice and case nodes, and case nodes are
+            also marked with a colon (":").</t>
+
+            <t>Ellipsis ("...") stands for contents of subtrees that are not
+            shown.</t>
+          </list></t>
+      </section>
+    </section>
+
+    <section title="DS-Lite YANG Modules: An Overview">
+      <t>As shown in <xref target="arch"></xref>:<list style="symbols">
+          <t>The AFTR element is a combination of an IPv4-in-IPv6 tunnel and a
+          NAPT function (Section 2.2 of <xref target="RFC3022"></xref>).</t>
+
+          <t>The B4 element is an IPv4-in-IPv6 tunnel.</t>
+        </list></t>
+
+      <t>Therefore, the AFTR YANG module is designed to augment both the
+      Interfaces YANG module <xref target="RFC7223"></xref> and the NAT YANG
+      module <xref target="I-D.ietf-opsawg-nat-yang"></xref> with DS-Lite
+      specific features. The B4 YANG module augments the interfaces YANG
+      module.</t>
+
+      <t>Concretely, the AFTR YANG module (<xref target="server"></xref>)
+      augments the Interfaces YANG module with the following:<list
+          style="symbols">
+          <t>An IPv6 address used by the AFTR for sending and receiving
+          IPv4-in-IPv6 packets (aftr-ipv6-address).</t>
+
+          <t>An IPv4 address that is used by the AFTR for troubleshooting
+          purposes (aftr-ipv4-address): According to <xref
+          target="RFC6333"></xref>, that address can be used to report ICMP
+          problems and will appear in traceroute outputs.</t>
+
+          <t>The tunnel MTU to avoid fragmentation (tunnel-mtu): Since using
+          an IPv4-in-IPv6 encapsulation to carry IPv4 traffic over IPv6
+          reduces the effective MTU of the datagram, operators should be able
+          to increase the MTU size by at least 40 bytes to accommodate both
+          the IPv6 encapsulation header and the IPv4 datagram without
+          fragmenting the IPv6 packet (Section 2.2 of <xref
+          target="RFC6908"></xref>).</t>
+
+          <t>A policy to limit the number of DS-Lite softwires per subscriber
+          (max-softwire-per-subscriber): This policy aims to prevent a
+          misbehaving subscriber from mounting several DS-Lite softwires that
+          would consume additional AFTR resources (e.g., get more external
+          ports if the quota were enforced on a per-softwire basis, consume
+          extra processing due to a large number of active softwires) <xref
+          target="RFC7785"></xref>.</t>
+
+          <t>A DSCP marking policy to be followed when
+          encapsulating/decapsulating packets (v6-v4-dscp-preservation):
+          Section 2.10 of <xref target="RFC6908"></xref> discusses the uniform
+          model which assumes that implementations of this model copy the DSCP
+          value to the outer IP header at encapsulation and copy the outer
+          header's DSCP value to the inner IP header at decapsulation.
+          Operators should configure the AFTR so that it copies the DSCP value
+          in the IPv4 header to the Traffic Class field in the IPv6 header,
+          and vice versa.</t>
+        </list></t>
+
+      <t>In addition, the AFTR YANG module augments the NAT YANG module
+      (policy, in particular) with the following:<list style="symbols">
+          <t>A policy to instruct the AFTR whether a state can be
+          automatically migrated (state-migrate): This policy avoids stale
+          mappings at the AFTR and minimizes the risk of service disruption
+          for subscribers. According to <xref target="RFC7785"></xref>, the
+          AFTR should migrate existing state to be bound to the new IPv6
+          address in the event a new IPv6 address is assigned to the B4
+          element. This operation ensures that traffic destined to the
+          previous B4's IPv6 address will be redirected to the newer B4's IPv6
+          address.</t>
+
+          <t>An instruction to rewrite the TCP Maximum Segment Size (MSS)
+          option (mss-clamping) to avoid TCP fragmentation (Section 6.3 of
+          <xref target="RFC6333"></xref>).</t>
+        </list></t>
+
+      <t>Given that the NAPT table of the AFTR element is extended to include
+      the source IPv6 address of incoming packets, the AFTR YANG module
+      augments the NAPT44 mapping-entry with the following:<list
+          style="symbols">
+          <t>b4-ipv6-address which is used to record the source IPv6 address
+          of a packet received from a B4 element. This IPv6 address is
+          required to disambiguate between the overlapping IPv4 address space
+          of subscribers.</t>
+
+          <t>The value of the Traffic Class field in the IPv6 header as
+          received from a B4 element (v6-dscp): This information is used to
+          preserve DSCP marking when encapsulating/decapsulationg at the
+          AFTR.</t>
+
+          <t>The IPv4 DSCP marking of the IPv4 packet received from a B4
+          element (internal-v4-dscp): This information can be used by the AFTR
+          for setting the DSCP of packets relayed to a B4 element.</t>
+
+          <t>The IPv4 DSCP marking as set by the AFTR in its external
+          interface (external-v4-dscp): An AFTR can be instructed to preserve
+          the same marking or to set it to another value when forwarding an
+          IPv4 packet upstream. </t>
+        </list></t>
+
+      <t>Access Control List (ACL) and Quality of Service (QoS) policies
+      discussed in Section 2.5 of <xref target="RFC6908"></xref> are out of
+      scope. A YANG module for ACLs is documented in <xref
+      target="I-D.ietf-netmod-acl-model"></xref>.</t>
+
+      <t>Likewise, PCP-related considerations discussed in Section 8.5 of
+      <xref target="RFC6333"></xref> are out of scope. A YANG module for PCP
+      is documented in <xref target="I-D.boucadair-pcp-yang"></xref>.</t>
+
+      <t><figure anchor="server" title="YANG Module for DS-Lite AFTR">
+          <artwork><![CDATA[module: ietf-dslite-aftr
+  augment /if:interfaces/if:interface:
+    +--rw aftr-ipv6-address?             inet:ipv6-address
+    +--rw aftr-ipv4-address?             inet:ipv4-address
+    +--rw tunnel-mtu?                    uint16
+    +--rw max-softwire-per-subscriber?   uint8
+    +--rw v6-v4-dscp-preservation?       boolean
+  augment /nat:nat/nat:instances/nat:instance/nat:policy:
+    +--rw state-migrate?   boolean
+    +--rw mss-clamping
+       +--rw enable?      boolean
+       +--rw mss-value?   uint16
+  augment /nat:nat/nat:instances/nat:instance/nat:mapping-table/nat:mapping-entry:
+    +--rw b4-ipv6-address?    inet:ipv6-address
+    +--rw v6-dscp?            uint8
+    +--rw internal-v4-dscp?   uint8
+    +--rw external-v4-dscp?   uint8
+]]></artwork>
+        </figure>Examples to illustrate the use of this module are provided in
+      <xref target="examples"></xref>.</t>
+
+      <t>The B4 YANG module (<xref target="b4"></xref>) augments the
+      Interfaces YANG module with the following:<list style="symbols">
+          <t>An IPv6 address used by a B4 element for sending and receiving
+          IPv4-in-IPv6 packets (b4-ipv6-address).</t>
+
+          <t>The IPv6 address of the AFTR to use by a B4 element
+          (aftr-ipv6-addr).</t>
+
+          <t>An IPv4 address that is used by a B4 element for troubleshooting
+          purposes (b4-ipv4-address).</t>
+
+          <t>The tunnel MTU at the B4 side to avoid fragmentation
+          (tunnel-mtu).</t>
+
+          <t>An instruction whether DSCP marking is to be preserved when
+          encapsulating an IPv4 packet in an IPv6 packet
+          (v6-v4-dscp-preservation).</t>
+        </list></t>
+
+      <t><figure anchor="b4" title="YANG Module for DS-Lite B4">
+          <artwork><![CDATA[module: ietf-dslite-b4
+  augment /if:interfaces/if:interface:
+    +--rw b4-ipv6-address?           inet:ipv6-address
+    +--rw aftr-ipv6-addr?            inet:ipv6-address
+    +--rw b4-ipv4-address?           inet:ipv4-address
+    +--rw tunnel-mtu?                uint16
+    +--rw v6-v4-dscp-preservation?   boolean]]></artwork>
+        </figure></t>
+
+      <t>An example to illustrate the use of this module is provided in <xref
+      target="b4-example"></xref>.</t>
+    </section>
+
+    <section title="DS-Lite AFTR YANG Module">
+      <t><figure>
+          <artwork><![CDATA[<CODE BEGINS> file "ietf-dslite-aftr@2017-11-13.yang"
+
+module ietf-dslite-aftr {
+  yang-version 1.1;
+
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dslite-aftr";
+  prefix dslite-aftr;
+    
+  import ietf-inet-types { prefix inet; }
+  import ietf-interfaces { prefix if; }
+  import iana-if-type { prefix ianaift; }
+  import ietf-nat {prefix nat;}
+    
+  organization "IETF Softwire Working Group";
+
+  contact
+
+    "WG Web:   <https://datatracker.ietf.org/wg/softwire/>
+     WG List:  <mailto:softwires@ietf.org>
+
+     WG Chair: Ian Farrer
+               <mailto:ianfarrer@gmx.com>
+
+     WG Chair: Yong Cui
+               <mailto:cuiyong@tsinghua.edu.cn>
+
+     Editor:  Mohamed Boucadair 
+              <mailto:mohamed.boucadair@orange.com>
+   
+     Editor:  Chritsian Jacquenet 
+              <mailto:christian.jacquenet@orange.com>
+
+     Editor:  Senthil Sivakumar 
+              <mailto:ssenthil@cisco.com>";
+     
+   description
+      "This module is a YANG module for DS-Lite AFTR 
+      implementations.
+
+      Copyright (c) 2017 IETF Trust and the persons identified as
+      authors of the code.  All rights reserved.
+
+      Redistribution and use in source and binary forms, with or
+      without modification, is permitted pursuant to, and subject
+      to the license terms contained in, the Simplified BSD License
+      set forth in Section 4.c of the IETF Trust's Legal Provisions
+      Relating to IETF Documents
+      (http://trustee.ietf.org/license-info).
+
+      This version of this YANG module is part of RFC XXXX; see
+      the RFC itself for full legal notices.";
+
+  revision 2017-11-13 {
+    description
+      "Initial revision.";
+    reference
+      "RFC XXXX: YANG Data Modules for the DS-Lite";
+  }
+
+augment "/if:interfaces/if:interface" {
+  when "if:type = 'ianaift:tunnel'"; 
+  description 
+    "Augments Interface module with AFTR parameters.
+     IANA interface types are maintained at this registry:
+     https://www.iana.org/assignments/ianaiftype-mib/ianaiftype-mib.
+         
+       tunnel (131),       -- Encapsulation interface"; 
+        
+  leaf aftr-ipv6-address {
+    type inet:ipv6-address;
+    description 
+      "IPv6 address of the DS-Lite AFTR.";
+    reference
+      "RFC 6333: Dual-Stack Lite Broadband Deployments Following
+                 IPv4 Exhaustion"; 
+  }
+    
+  leaf aftr-ipv4-address {
+    type inet:ipv4-address;
+    default "192.0.0.1";
+    description 
+      "IPv4 address of the DS-Lite AFTR.
+
+       192.0.0.1 is reserved for the AFTR element.
+
+       This address can be used to report ICMP problems and will
+       appear in traceroute outputs.";
+    reference
+      "RFC 6333: Dual-Stack Lite Broadband Deployments Following
+                 IPv4 Exhaustion";  
+    }
+   
+  leaf tunnel-mtu {
+    type uint16;
+    description 
+      "Configures a tunnel MTU.
+       [RFC6908] specifies that since fragmentation and reassembly
+       is not optimal, the operator should do everything possible
+       to eliminate the need for it.  If the operator uses simple 
+       IPv4-in-IPv6 softwire, it is recommended that the MTU size 
+       of the IPv6 network between the B4 and the AFTR accounts for
+       the additional overhead (40 bytes)."; 
+    reference
+      "RFC 6908: Deployment Considerations for Dual-Stack Lite"; 
+  }         
+   
+  leaf max-softwire-per-subscriber {
+    type uint8;
+    default 1;
+    description 
+      "Configures the maximum softwires per subscriber feature.
+
+       A subscriber is uniquely identified by means 
+       of subscriber-mask.
+
+       This policy aims to prevent a misbehaving subscriber from 
+       mounting several DS-Lite softwires that would consume 
+       additional AFTR resources (e.g., get more external ports 
+       if the quota were enforced on a per-softwire basis,
+       consume extra processing due to a large number of active 
+       softwires).";
+
+    reference
+      "Section 4 of RFC 7785."; 
+  } 
+        
+  leaf v6-v4-dscp-preservation {
+    type boolean;
+    description 
+      "Copies the DSCP value from the IPv6 header and vice versa.
+
+       According to Section 2.10 of [RFC6908], operators should 
+       use this model by provisioning the network such that the AFTR
+       copies the DSCP value in the IPv4 header to the Traffic Class 
+       field in the IPv6 header, after the encapsulation for 
+       the downstream traffic.";
+    reference
+      "Section 2.10 of RFC 6908."; 
+  } 
+}
+
+augment "/nat:nat/nat:instances/"+
+           "nat:instance/nat:policy" {
+  description 
+    "Augments the NAPT44 module with AFTR parameters.";       
+  
+  leaf state-migrate {
+    type boolean;
+    default true;
+    description 
+      "State migration is enabled by default.
+
+       In the event a new IPv6 address is assigned to the B4 element,
+       the AFTR should migrate existing state to be bound to the new
+       IPv6 address.  This operation ensures that traffic destined to
+       the previous B4's IPv6 address will be redirected to the newer
+       B4's IPv6 address.  The destination IPv6 address for tunneling
+       return traffic from the AFTR should be the last seen as the B4's
+       IPv6 source address from the CPE.
+
+       The AFTR uses the subscriber-mask to determine whether two
+       IPv6 addresses belong to the same CPE (e.g., if the
+       subscriber-mask is set to 56, the AFTR concludes that
+       2001:db8:100:100::1 and 2001:db8:100:100::2 belong to the same
+       CPE assigned with 2001:db8:100:100::/56).";
+
+    reference
+      "RFC 7785: Recommendations for Prefix Binding in the Context
+                 of Softwire Dual-Stack Lite"; 
+  }     
+    
+  container mss-clamping {
+    description 
+      "MSS rewriting configuration to avoid IPv6 fragmentation.";
+
+    leaf enable {
+      type boolean;
+      description 
+        "Enable/disable MSS rewriting feature.";
+    }
+    
+    leaf mss-value {
+      type uint16;
+      units "octets";
+      description 
+        "Sets the MSS value to be used for MSS rewriting.";
+    }
+  }
+ }
+
+augment "/nat:nat/nat:instances/nat:instance/"+
+            "nat:mapping-table/nat:mapping-entry"{
+  description
+    "Augments the NAPT44 mapping table with DS-Lite specifics."; 
+  
+  leaf b4-ipv6-address {
+    type inet:ipv6-address;      
+    description 
+      "Corresponds to the IPv6 address used by the B4 element.";
+    reference
+      "RFC 6333: Dual-Stack Lite Broadband Deployments Following
+                 IPv4 Exhaustion"; 
+  }
+
+  leaf v6-dscp {
+    type uint8;
+    description 
+      "DSCP value used at the softwire level (i.e., IPv6 header)."; 
+   }
+
+   leaf internal-v4-dscp {
+     type uint8;
+     description 
+       "DSCP value of the encapsulated IPv4 packet."; 
+   }
+
+   leaf external-v4-dscp {
+     type uint8;
+     description 
+       "DSCP value of the translated IPv4 packet as marked by
+        the AFTR."; 
+   }
+ }
+}
+<CODE ENDS>]]></artwork>
+        </figure></t>
+    </section>
+
+    <section title="DS-Lite B4 YANG Module">
+      <t><figure>
+          <artwork><![CDATA[<CODE BEGINS> file "ietf-dslite-b4@2017-11-13.yang"
+
+module ietf-dslite-b4 {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dslite-b4";
+  prefix dslite-b4;
+    
+  import ietf-inet-types { prefix inet; }
+  import ietf-interfaces { prefix if; }
+  import iana-if-type { prefix ianaift; }
+    
+  organization "IETF Softwire Working Group";
+
+  contact
+
+    "WG Web:   <https://datatracker.ietf.org/wg/softwire/>
+     WG List:  <mailto:softwires@ietf.org>
+
+     WG Chair: Ian Farrer
+               <mailto:ianfarrer@gmx.com>
+
+     WG Chair: Yong Cui
+               <mailto:cuiyong@tsinghua.edu.cn>
+
+     Editor:  Mohamed Boucadair 
+              <mailto:mohamed.boucadair@orange.com>
+   
+     Editor:  Chritsian Jacquenet 
+              <mailto:christian.jacquenet@orange.com>
+
+     Editor:  Senthil Sivakumar 
+              <mailto:ssenthil@cisco.com>";
+
+  description
+    "This module is a YANG module for DS-Lite B4 implementations.
+
+     Copyright (c) 2017 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Simplified BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  revision 2017-11-13 {
+    description
+      "Initial revision.";
+    reference
+      "RFC XXXX: YANG Data Modules for the DS-Lite";
+  }
+
+augment "/if:interfaces/if:interface" {
+  when "if:type = 'ianaift:tunnel'";
+  description 
+    "Augments Interface module with B4 parameters.
+     IANA interface types are maintained at this registry:
+     https://www.iana.org/assignments/ianaiftype-mib/ianaiftype-mib.
+         
+       tunnel (131),       -- Encapsulation interface"; 
+
+  leaf b4-ipv6-address {
+    type inet:ipv6-address;
+    description 
+      "The IPv6 address used by the B4 element.";
+    reference
+      "RFC 6333: Dual-Stack Lite Broadband Deployments Following
+                 IPv4 Exhaustion";  
+  }
+
+  leaf aftr-ipv6-addr {
+    type inet:ipv6-address;
+    description
+      "The AFTR's IPv6 address.";
+    reference
+      "RFC 6333: Dual-Stack Lite Broadband Deployments Following
+                 IPv4 Exhaustion";  
+  }
+
+  leaf b4-ipv4-address {
+    type inet:ipv4-address;
+    default "192.0.0.2";
+    description 
+      "IPv4 address of the DS-Lite B4.
+
+       192.0.0.0/29 is reserved for the B4 element.
+
+       This address can be used to report ICMP problems and will 
+       appear in traceroute outputs.";
+     reference 
+       "RFC 6333: Dual-Stack Lite Broadband Deployments Following
+                  IPv4 Exhaustion";  
+  }
+   
+  leaf tunnel-mtu {
+    type uint16;
+    description 
+      "Configures a tunnel MTU.
+
+       [RFC6908] specifies that since fragmentation and reassembly is 
+       not optimal, the operator should do everything possible to  
+       eliminate the need for it.  If the operator uses simple 
+       IPv4-in-IPv6 softwire, it is recommended that the MTU size of 
+       the IPv6 network between the B4 and the AFTR accounts for 
+       the additional overhead (40 bytes)."; 
+     reference
+       "RFC 6908: Deployment Considerations for Dual-Stack Lite"; 
+  }
+
+  leaf v6-v4-dscp-preservation {
+    type boolean;
+    description 
+      "Copies the DSCP value from the IPv6 header and vice versa.
+
+       Operators should use this model by provisioning the network such 
+       that the AFTR copies the DSCP value in the IPv4 header to 
+       the Traffic Class field in the IPv6 header, after the 
+       encapsulation for the downstream traffic.";
+    reference
+      "Section 2.10 of RFC 6908."; 
+  }
+ }
+}
+<CODE ENDS>]]></artwork>
+        </figure></t>
+    </section>
+
+    <section anchor="sec-security" title="Security Considerations">
+      <t>The YANG module defined in this document is designed to be accessed
+      via network management protocols such as NETCONF <xref
+      target="RFC6241"></xref> or RESTCONF <xref target="RFC8040"></xref>. The
+      lowest NETCONF layer is the secure transport layer, and the
+      mandatory-to-implement secure transport is Secure Shell (SSH) <xref
+      target="RFC6242"></xref>. The lowest RESTCONF layer is HTTPS, and the
+      mandatory-to-implement secure transport is TLS <xref
+      target="RFC5246"></xref>.</t>
+
+      <t>The NETCONF access control model <xref target="RFC6536"></xref>
+      provides the means to restrict access for particular NETCONF or RESTCONF
+      users to a preconfigured subset of all available NETCONF or RESTCONF
+      protocol operations and content.</t>
+
+      <t>All data nodes defined in the YANG module which can be created,
+      modified and deleted (i.e., config true, which is the default). These
+      data nodes are considered sensitive. Write operations (e.g.,
+      edit-config) applied to these data nodes without proper protection can
+      negatively affect network operations.</t>
+
+      <t>Security considerations related to DS-Lite are discussed in <xref
+      target="RFC6333"></xref>.</t>
+    </section>
+
+    <section anchor="sec-IANA" title="IANA Considerations">
+      <t>This document requests IANA to register the following URIs in the
+      "IETF XML Registry" <xref target="RFC3688"></xref>: <figure>
+          <artwork><![CDATA[         URI: urn:ietf:params:xml:ns:yang:ietf-dslite-aftr
+         Registrant Contact: The IESG.
+         XML: N/A; the requested URI is an XML namespace.
+
+         URI: urn:ietf:params:xml:ns:yang:ietf-dslite-b4
+         Registrant Contact: The IESG.
+         XML: N/A; the requested URI is an XML namespace.
+]]></artwork>
+        </figure> This document requests IANA to register the following YANG
+      modules in the "YANG Module Names" registry <xref
+      target="RFC7950"></xref>.<figure>
+          <artwork><![CDATA[         name: ietf-dslite-aftr
+         namespace: urn:ietf:params:xml:ns:yang:ietf-dslite-aftr
+         prefix: dslite-aftr
+         reference: RFC XXXX
+
+         name: ietf-dslite-b4
+         namespace: urn:ietf:params:xml:ns:yang:ietf-dslite-b4
+         prefix: dslite-b4
+         reference: RFC XXXX
+
+]]></artwork>
+        </figure></t>
+    </section>
+
+    <section anchor="sec-Ack" title="Acknowledgements">
+      <t>Thanks to Qin Wu for identifying a compiling error. Mahesh
+      Jethanandani provided an early yangdoctors review; many thanks to
+      him.</t>
+
+      <t>Many thanks to Ian Farrer for the review and comments</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative references">
+      <?rfc include='reference.RFC.6333'
+?>
+
+      <?rfc include='reference.RFC.7950'?>
+
+      <?rfc include='reference.RFC.3688'?>
+
+      <?rfc include='reference.RFC.6241'?>
+
+      <?rfc include='reference.RFC.6242'?>
+
+      <?rfc include='reference.RFC.5246'?>
+
+      <?rfc include='reference.RFC.6536'?>
+
+      <?rfc include='reference.RFC.8040'?>
+
+      <?rfc include='reference.RFC.6991'?>
+
+      <?rfc include='reference.RFC.7223'?>
+
+      <?rfc include='reference.I-D.ietf-opsawg-nat-yang'?>
+    </references>
+
+    <references title="Informative references">
+      <?rfc include='reference.RFC.6087'?>
+
+      <?rfc include='reference.RFC.3022'?>
+
+      <?rfc include='reference.RFC.6908'?>
+
+      <?rfc include='reference.RFC.7785'?>
+
+      <?rfc include='reference.I-D.boucadair-pcp-yang'?>
+
+      <?rfc include='reference.I-D.ietf-netmod-acl-model'?>
+    </references>
+
+    <section anchor="b4-example" title="B4 Example">
+      <t>The following example shows a B4 element (2001:db8:0:1::1) that is
+      configured with an AFTR element (2001:db8:0:2::1). The B4 element is
+      also instructed to preserve the DSCP marking.</t>
+
+      <t><figure>
+          <artwork><![CDATA[<interface>
+   <name>myB4</name>
+   <type>ianaift:tunnel</type>
+   <enabled>true</enabled>
+   <b4-ipv6-address>2001:db8:0:1::1</b4-ipv6-address>
+   <aftr-ipv6-addr>2001:db8:0:2::1</aftr-ipv6-addr>
+   <v6-v4-dscp-preservation>true</v6-v4-dscp-preservation>
+</interface>
+]]></artwork>
+        </figure></t>
+
+      <t></t>
+    </section>
+
+    <section anchor="examples" title="AFTR Examples">
+      <t>The following example shows an AFTR that is reachable at
+      2001:db8:0:2::1. Also, this XML snippet indicates that the AFTR is
+      provided with an IPv4 address (192.0.0.1) to be used for troubleshooting
+      purposes such as reporting problems to B4s. Moreover, the AFTR is
+      instructed to limit the number of softwires per subscriber to '1'. </t>
+
+      <t>Note that a subscriber is identified by a subscriber-mask (<xref
+      target="RFC7785"></xref>) that can be configured by means of <xref
+      target="I-D.ietf-opsawg-nat-yang"></xref>.</t>
+
+      <t><figure>
+          <artwork><![CDATA[<interface>
+   <name>myAFTR</name>
+   <type>ianaift:tunnel</type>
+   <enabled>true</enabled>
+   <aftr-ipv6-address>2001:db8:0:2::1</aftr-ipv6-address>
+   <aftr-ipv4-address>192.0.0.1</aftr-ipv4-address>
+   <max-softwire-per-subscriber>1</max-softwire-per-subscriber>
+</interface>
+]]></artwork>
+        </figure></t>
+
+      <t>The following shows an XML excerpt depicting a dynamic UDP mapping
+      entry maintained by a DS-Lite AFTR for a packet received from the B4
+      element introduced in <xref target="b4-example"></xref>. Concretely,
+      this UDP packet received with a source IPv6 address (2001:db8:0:1::1), a
+      source IPv4 address (192.0.2.1), and source port number (1568) is
+      translated into a UDP packet having a source IPv4 address (198.51.100.1)
+      and source port number (15000). The remaining lifetime of this mapping
+      is 300 seconds.</t>
+
+      <t><figure>
+          <artwork><![CDATA[<mapping-entry>
+  <index>15</index>
+  <type>
+     dynamic-explicit
+  </type>
+  <transport-protocol>
+     17
+  </transport-protocol>
+  <b4-ipv6-address>
+     2001:db8:0:1::1
+  </b4-ipv6-address>
+  <internal-src-address>
+     192.0.2.1
+  </internal-src-address>
+  <internal-src-port>
+     <start-port-number>
+        1568
+     </start-port-number>
+  </internal-src-port>
+  <external-src-address>
+     198.51.100.1
+  </external-src-address>
+  <external-src-port>
+     <start-port-number>
+        15000
+     </start-port-number>
+  </external-src-port>
+  <lifetime>
+     300
+  </lifetime>
+</mapping-entry>]]></artwork>
+        </figure></t>
+
+      <t></t>
+    </section>
+  </back>
+</rfc>
