@@ -1,0 +1,1059 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>wdiff draft-ietf-softwire-dslite-yang-07.txt draft-ietf-softwire-dslite-yang-08.txt</title><style id="zoomLevel-styles"></style></head><body style="font-size: 17.6px !important; line-height: 21.0834px !important;">
+<pre style="font-size: 14.3px !important; line-height: 17.71px !important;">
+Network Working Group                                       M. Boucadair
+Internet-Draft                                              C. Jacquenet
+Intended status: Standards Track                                  Orange
+Expires: <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">April 13,</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">May 11,</font></strong> 2018                                       S. Sivakumar
+                                                           Cisco Systems
+                                                        <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">October 10,</font></strike>
+                                                        <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">November 7,</font></strong> 2017
+
+                   YANG Data Modules for the DS-Lite
+                   <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">draft-ietf-softwire-dslite-yang-07</font></strike>
+                   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">draft-ietf-softwire-dslite-yang-08</font></strong>
+
+Abstract
+
+   This document defines YANG modules for the DS-Lite Address Family
+   Transition Router (AFTR) and Basic Bridging BroadBand (B4) <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">elements .</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">elements.
+
+Editorial Note (To be removed by RFC Editor)
+
+   Please update these statements with the RFC number to be assigned to
+   this document:
+
+   o  "This version of this YANG module is part of RFC XXXX;"
+
+   o  "RFC XXXX: A YANG Data Model for Network Address Translation (NAT)
+      and Network Prefix Translation (NPT)";
+
+   o  "reference: RFC XXXX"</font></strong>
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">April 13,</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">May 11,</font></strong> 2018.
+
+Copyright Notice
+
+   Copyright (c) 2017 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (https://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
+     <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">1.2.  Tree Diagrams . . . . . . . . . . . . . . . . . . . . . .   4</font></strong>
+   2.  DS-Lite YANG Modules: An Overview . . . . . . . . . . . . . .   4
+   3.  DS-Lite AFTR YANG Module  . . . . . . . . . . . . . . . . . .   <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">7</font></strike>   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">8</font></strong>
+   4.  DS-Lite B4 YANG Module  . . . . . . . . . . . . . . . . . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">14</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">13</font></strong>
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">16</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">15</font></strong>
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">17</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">16</font></strong>
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">17</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">16</font></strong>
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">18</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">17</font></strong>
+     8.1.  Normative references  . . . . . . . . . . . . . . . . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">18</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">17</font></strong>
+     8.2.  Informative references  . . . . . . . . . . . . . . . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">19</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">18</font></strong>
+   Appendix A.  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">Examples</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">B4 Example . .</font></strong> . . . . . . . . . . . . . . . . . . .  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">19
+   Appendix B.  AFTR Examples</font></strong>  . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">20</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">. . . . . . . . . . . . . . . .  19</font></strong>
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">21</font></strike>  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">20</font></strong>
+
+1.  Introduction
+
+   This document defines data models for DS-Lite [RFC6333], using the
+   YANG data modeling language [RFC7950].  Both the Address Family
+   Transition Router (AFTR) and Basic Bridging BroadBand (B4) elements
+   are covered by this specification.
+
+   As a reminder, Figure 1 illustrates an overview of the DS-Lite
+   architecture that involves AFTR and B4 elements.
+
+                      +-----------+
+                      |    Host   |
+                      +-----+-----+
+                            <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">|10.0.0.1</font></strike>
+                            <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">|192.0.2.1</font></strong>
+                            |
+                            |
+                            <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">|10.0.0.2</font></strike>
+                            <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">|192.0.2.2</font></strong>
+                  +---------|---------+
+                  |         |         |
+                  |    Home router    |
+                  |+--------+--------+|
+                  ||       B4        ||
+                  |+--------+--------+|
+                  +--------|||--------+
+                           |||2001:db8:0:1::1
+                           |||
+                           |||&lt;-IPv4-in-IPv6 softwire
+                           |||
+                    -------|||-------
+                  /        |||        \
+                 |   ISP core network  |
+                  \        |||        /
+                    -------|||-------
+                           |||
+                           |||2001:db8:0:2::1
+                  +--------|||--------+
+                  |        AFTR       |
+                  |+--------+--------+|
+                  ||   Concentrator  ||
+                  |+--------+--------+|
+                  |       |NAT|       |
+                  |       +-+-+       |
+                  +---------|---------+
+                            <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">|192.0.2.1</font></strike>
+                            <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">|198.51.100.1</font></strong>
+                            |
+                    --------|--------
+                  /         |         \
+                 |       Internet      |
+                  \         |         /
+                    --------|--------
+                            |
+                            <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">|198.51.100.1</font></strike>
+                            <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">|203.0.113.1</font></strong>
+                      +-----+-----+
+                      | IPv4 Host |
+                      +-----------+
+
+                    Figure 1: DS-Lite Base Architecture
+
+   DS-Lite deployment considerations are discussed in [RFC6908].
+
+   This document follows the guidelines of [RFC6087], uses the common
+   YANG types defined in [RFC6991], and adopts Network Management
+   Datastore Architecture (NMDA).
+
+1.1.  Terminology
+
+   This document makes use of the terms defined in Section 3 of
+   [RFC6333].
+
+   The terminology for describing YANG data modules is defined in
+   [RFC7950].
+
+<strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">1.2.  Tree Diagrams</font></strong>
+
+   The meaning of the symbols in <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">tree</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">these</font></strong> diagrams is <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">defined in
+   [I-D.ietf-netmod-yang-tree-diagrams].</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">as follows:
+
+   o  Brackets "[" and "]" enclose list keys.
+
+   o  Curly braces "{" and "}" contain names of optional features that
+      make the corresponding node conditional.
+
+   o  Abbreviations before data node names: "rw" means configuration
+      (read-write), "ro" state data (read-only).
+
+   o  Symbols after data node names: "?" means an optional node, "!" a
+      container with presence, and "*" denotes a "list" or "leaf-list".
+
+   o  Parentheses enclose choice and case nodes, and case nodes are also
+      marked with a colon (":").
+
+   o  Ellipsis ("...") stands for contents of subtrees that are not
+      shown.</font></strong>
+
+2.  DS-Lite YANG Modules: An Overview
+
+   As shown in Figure 1:
+
+   o  The AFTR element is a combination of an IPv4-in-IPv6
+      <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">encapsualtion/decapsulation function</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">tunnel</font></strong> and a <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">NAT function.</font></strike>
+      <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">NAPT function (Section 2.2 of [RFC3022]).</font></strong>
+
+   o  The B4 element is an IPv4-in-IPv6 <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">encapsulation function.</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">tunnel.</font></strong>
+
+   Therefore, the AFTR YANG module is designed to augment both the
+   Interfaces YANG module [RFC7223] and the NAT YANG module
+   [I-D.ietf-opsawg-nat-yang] with DS-Lite specific features.  The B4
+   YANG module augments the interfaces YANG module.
+
+   Concretely, the AFTR YANG module (Figure 2) augments the Interfaces
+   YANG module with the following:
+
+   o  An IPv6 address used by the AFTR for sending and receiving IPv4-
+      in-IPv6 packets (aftr-ipv6-address).
+
+   o  An IPv4 address that is used by the AFTR for troubleshooting
+      purposes (aftr-ipv4-address): According to [RFC6333], that address
+      can be used to report ICMP problems and will appear in traceroute
+      outputs.
+
+   o  The tunnel MTU to avoid fragmentation (tunnel-mtu): Since using an
+      IPv4-in-IPv6 encapsulation to carry IPv4 traffic over IPv6 reduces
+      the effective MTU of the datagram, operators should be able to
+      increase the MTU size by at least 40 bytes to accommodate both the
+      IPv6 encapsulation header and the IPv4 datagram without
+      fragmenting the IPv6 packet (Section 2.2 of [RFC6908]).
+
+   o  A policy to limit the number of DS-Lite softwires per subscriber
+      (max-softwire-per-subscriber): This policy aims to prevent a
+      misbehaving subscriber from mounting several DS-Lite softwires
+      that would consume additional AFTR resources (e.g., get more
+      external ports if the quota were enforced on a per-softwire basis,
+      consume extra processing due to a large number of active
+      softwires) [RFC7785].
+
+   o  A DSCP marking policy to be followed when encapsulating/
+      decapsulating packets (v6-v4-dscp-preservation): Section 2.10 of
+      [RFC6908] discusses the uniform model which assumes that
+      implementations of this model copy the DSCP value to the outer IP
+      header at encapsulation and copy the outer header's DSCP value to
+      the inner IP header at decapsulation.  Operators should configure
+      the AFTR so that it copies the DSCP value in the IPv4 header to
+      the Traffic Class field in the IPv6 header, and vice versa.
+
+   In addition, the AFTR YANG module augments the NAT YANG module <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">(nat-
+   policy,</font></strike>
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">(policy,</font></strong> in particular) with the following:
+
+   o  A policy to instruct the AFTR whether a state can be automatically
+      migrated (state-migrate): This policy avoids stale mappings at the
+      AFTR and minimizes the risk of service disruption for subscribers.
+      According to [RFC7785], the AFTR should migrate existing state to
+      be bound to the new IPv6 address in the event a new IPv6 address
+      is assigned to the B4 element.  This operation ensures that
+      traffic destined to the previous B4's IPv6 address will be
+      redirected to the newer B4's IPv6 address.
+
+   o  An instruction to rewrite the TCP Maximum Segment Size (MSS)
+      option (mss-clamping) to avoid TCP <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">fragmentation.</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">fragmentation (Section 6.3 of
+      [RFC6333]).</font></strong>
+
+   Given that the <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">NAT44</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">NAPT</font></strong> table of the AFTR element is extended to include
+   the source IPv6 address of incoming packets, the AFTR YANG module
+   augments the <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">NAT</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">NAPT44</font></strong> mapping-entry with the following:
+
+   o  b4-ipv6-address which is used to record the source IPv6 address of
+      a packet received from a B4 element.  This IPv6 address is
+      required to disambiguate between the overlapping IPv4 address
+      space of <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">customers.</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">subscribers.</font></strong>
+
+   o  The value of the Traffic Class field in the IPv6 header as
+      received from a B4 element (v6-dscp): This information is used to
+      preserve DSCP marking when encapsulating/decapsulationg at the
+      AFTR.
+
+   o  The IPv4 DSCP marking of the IPv4 packet received from a B4
+      element (internal-v4-dscp): This information can be used by the
+      AFTR <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">fro enforcing</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">for setting</font></strong> the <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">poi</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">DSCP of packets relayed to a B4 element.</font></strong>
+
+   o  The IPv4 DSCP marking as set by the AFTR in its external interface
+      (external-v4-dscp): An AFTR can be instructed to preserve the same
+      marking or to set it to another value when forwarding an IPv4
+      packet upstream.
+
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">Access Control List (ACL) and Quality of Service (QoS) policies
+   discussed in Section 2.5 of [RFC6908] are out of scope.  A YANG
+   module for ACLs is documented in [I-D.ietf-netmod-acl-model].
+
+   Likewise, PCP-related considerations discussed in Section 8.5 of
+   [RFC6333] are out of scope.  A YANG module for PCP is documented in
+   [I-D.boucadair-pcp-yang].</font></strong>
+
+module: ietf-dslite-aftr
+  augment /if:interfaces/if:interface:
+    +--rw aftr-ipv6-address?             inet:ipv6-address
+    +--rw aftr-ipv4-address?             inet:ipv4-address
+    +--rw tunnel-mtu?                    uint16
+    +--rw max-softwire-per-subscriber?   uint8
+    +--rw v6-v4-dscp-preservation?       boolean
+  augment <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">/nat:nat-module/nat:nat-instances/nat:nat-instance/nat:nat-policy:</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">/nat:nat/nat:instances/nat:instance/nat:policy:</font></strong>
+    +--rw state-migrate?   boolean
+    +--rw mss-clamping
+       +--rw <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">mss-clamping-enable?</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">enable?</font></strong>      boolean
+       +--rw mss-value?   uint16
+  augment <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">/nat:nat-module/nat:nat-instances/nat:nat-instance/nat:mapping-table/nat:mapping-entry:</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">/nat:nat/nat:instances/nat:instance/nat:mapping-table/nat:mapping-entry:</font></strong>
+    +--rw b4-ipv6-address?    inet:ipv6-address
+    +--rw v6-dscp?            uint8
+    +--rw internal-v4-dscp?   uint8
+    +--rw external-v4-dscp?   uint8
+
+                  Figure 2: YANG Module for DS-Lite AFTR
+
+   Examples to illustrate the use of this module are provided in
+   Appendix <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">A.</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">B.</font></strong>
+
+   The B4 YANG module (Figure 3) augments the Interfaces YANG module
+   with the following:
+
+   o  An IPv6 address used by a B4 element for sending and receiving
+      IPv4-in-IPv6 packets (b4-ipv6-address).
+
+   o  The IPv6 address of the AFTR to use by a B4 element (aftr-
+      ipv6-addr).
+
+   o  An IPv4 address that is used by a B4 element for troubleshooting
+      purposes (b4-ipv4-address).
+
+   o  The tunnel MTU at the B4 side to avoid fragmentation (tunnel-mtu).
+
+   o  An instruction whether DSCP marking is to <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">be</font></strong> preserved when
+      encapsulating an IPv4 packet in an IPv6 packet (v6-v4-dscp-
+      preservation).
+
+   module: ietf-dslite-b4
+     augment /if:interfaces/if:interface:
+       +--rw b4-ipv6-address?           inet:ipv6-address
+       +--rw aftr-ipv6-addr?            inet:ipv6-address
+       +--rw b4-ipv4-address?           inet:ipv4-address
+       +--rw tunnel-mtu?                uint16
+       +--rw v6-v4-dscp-preservation?   boolean
+
+                   Figure 3: YANG Module for DS-Lite B4
+
+   <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">PCP-related considerations are out of scope of</font></strike>
+
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">An example to illustrate</font></strong> the <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">document.  A YANG</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">use of this</font></strong> module <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">for PCP</font></strike> is <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">documented</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">provided</font></strong> in <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">[I-D.boucadair-pcp-yang].</font></strike>
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">Appendix A.</font></strong>
+
+3.  DS-Lite AFTR YANG Module
+
+ &lt;CODE BEGINS&gt; file <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"ietf-dslite-aftr@2017-10-09.yang"</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"ietf-dslite-aftr@2017-11-13.yang"</font></strong>
+
+ module ietf-dslite-aftr {
+   yang-version 1.1;
+
+   namespace "urn:ietf:params:xml:ns:yang:ietf-dslite-aftr";
+   prefix dslite-aftr;
+
+   import ietf-inet-types { prefix inet; }
+   import ietf-interfaces { prefix if; }
+   import iana-if-type { prefix ianaift; }
+   import ietf-nat {prefix nat;}
+
+   organization <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"Softwire</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"IETF Softwire</font></strong> Working Group";
+
+   contact
+     <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"Mohamed</font></strike>
+
+     <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"WG Web:   &lt;https://datatracker.ietf.org/wg/softwire/&gt;
+      WG List:  &lt;mailto:softwires@ietf.org&gt;
+
+      WG Chair: Ian Farrer
+                &lt;mailto:ianfarrer@gmx.com&gt;
+
+      WG Chair: Yong Cui
+                &lt;mailto:cuiyong@tsinghua.edu.cn&gt;
+
+      Editor:  Mohamed</font></strong> Boucadair <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;mohamed.boucadair@orange.com&gt;
+      Christian</font></strike>
+               <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;mailto:mohamed.boucadair@orange.com&gt;
+
+      Editor:  Chritsian</font></strong> Jacquenet <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;christian.jacquenet@orange.com&gt;</font></strike>
+               <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;mailto:christian.jacquenet@orange.com&gt;
+
+      Editor:</font></strong>  Senthil Sivakumar <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;ssenthil@cisco.com&gt;";</font></strike>
+               <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;mailto:ssenthil@cisco.com&gt;";</font></strong>
+
+    description
+       "This module is a YANG module for DS-Lite AFTR
+       implementations.
+
+       Copyright (c) 2017 IETF Trust and the persons identified as
+       authors of the code.  All rights reserved.
+
+       Redistribution and use in source and binary forms, with or
+       without modification, is permitted pursuant to, and subject
+       to the license terms contained in, the Simplified BSD License
+       set forth in Section 4.c of the IETF Trust's Legal Provisions
+       Relating to IETF Documents
+       (http://trustee.ietf.org/license-info).
+
+       This version of this YANG module is part of RFC XXXX; see
+       the RFC itself for full legal notices.";
+
+   revision <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">2017-10-09</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">2017-11-13</font></strong> {
+     description <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"Early yangdoctors review.";</font></strike>
+       <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"Initial revision.";</font></strong>
+     reference <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"-ietf-07";</font></strike>
+       <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"RFC XXXX: YANG Data Modules for the DS-Lite";</font></strong>
+   }
+
+    <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">revision 2017-08-10 {
+      description "The module augments also the Interface module.";
+      reference "-ietf-04";
+    }
+
+    revision 2017-07-27 {
+      description "Redesign the module as an augment of the NAT YANG module.";
+      reference "-ietf-04";
+    }
+
+    revision 2017-07-03 {
+      description "Fix some minor points.";
+      reference "-ietf-03";
+    }
+
+    revision 2017-01-03 {
+      description "Fixed a compilation error:
+        https://github.com/mbj4668/pyang/issues/296.";
+      reference "-ietf-02";
+    }
+
+    revision 2016-11-14 {
+      description "Integrates the comments from Ian:
+      add B4 module, add an MSS leaf, add more details about
+      logging protocols, and other edits.";
+      reference "-ietf-01";
+    }
+
+    revision 2016-07-27 {
+      description "-00 IETF version.";
+      reference "-ietf-00";
+    }
+
+    revision 2016-06-13 {
+      description "Update the module.";
+      reference "-04";
+
+    }
+
+    revision 2015-12-16 {
+      description "Fix an error.";
+      reference "-03";
+    }
+
+    revision 2015-09-01 {
+      description "Add port threshold notifications.";
+      reference "-02";
+    }
+
+    revision 2015-08-31 {
+      description "Fix a timeout issue.";
+      reference "-01";
+    }
+
+    revision 2015-08-17 {
+      description "First spec.";
+      reference "-00";
+    }
+
+/*New Identity*/
+
+    identity dslite {
+     base nat:nat44;
+
+     description
+      "Identity for DS-Lite; an extended NAT44.";
+
+      reference
+            "RFC 6333.";
+    }
+
+// Augment Interface module with DS-Lite Softwire
+
+augment "/if:interfaces/if:interface"</font></strike>
+
+ <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">augment "/if:interfaces/if:interface"</font></strong> {
+   when "if:type = 'ianaift:tunnel'";
+   description
+     "Augments Interface module with AFTR parameters.
+      IANA interface types are maintained at this <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">registery:</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">registry:</font></strong>
+      https://www.iana.org/assignments/ianaiftype-mib/ianaiftype-mib.
+
+        tunnel (131),       -- Encapsulation interface";
+
+   leaf aftr-ipv6-address {
+     type inet:ipv6-address;
+     description
+       "IPv6 address of the DS-Lite AFTR.";
+     reference
+       "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">6333.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">6333: Dual-Stack Lite Broadband Deployments Following
+                  IPv4 Exhaustion";</font></strong>
+   }
+
+   leaf aftr-ipv4-address {
+     type inet:ipv4-address;
+     default "192.0.0.1";
+     description
+       "IPv4 address of the DS-Lite AFTR.
+
+        192.0.0.1 is reserved for the AFTR element.
+
+        This address can be used to report ICMP problems and will
+        appear in traceroute outputs.";
+     reference
+       "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">6333.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">6333: Dual-Stack Lite Broadband Deployments Following
+                  IPv4 Exhaustion";</font></strong>
+     }
+
+   leaf tunnel-mtu {
+     type uint16;
+     description
+       "Configures a tunnel MTU.
+        [RFC6908] specifies that since fragmentation and reassembly
+        is not optimal, the operator should do everything possible
+        to eliminate the need for it.  If the operator uses simple
+        IPv4-in-IPv6 softwire, it is recommended that the MTU size
+        of the IPv6 network between the B4 and the AFTR accounts for
+        the additional overhead (40 bytes).";
+     reference
+       "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">6908.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">6908: Deployment Considerations for Dual-Stack Lite";</font></strong>
+   }
+
+   leaf max-softwire-per-subscriber {
+     type uint8;
+     default 1;
+     description
+       "Configures the maximum softwires per subscriber feature.
+
+        A subscriber is uniquely identified by means
+        of subscriber-mask.
+
+        This policy aims to prevent a misbehaving subscriber from
+        mounting several DS-Lite softwires that would consume
+        additional AFTR resources (e.g., get more external ports
+        if the quota were enforced on a per-softwire basis,
+        consume extra processing due to a large number of active
+        softwires).";
+
+     reference
+       "Section 4 of RFC 7785.";
+   }
+
+   leaf v6-v4-dscp-preservation {
+     type boolean;
+     description
+       "Copies the DSCP value from the IPv6 header and vice versa.
+
+        According to Section 2.10 of [RFC6908], operators should
+        use this model by provisioning the network such that the AFTR
+        copies the DSCP value in the IPv4 header to the Traffic Class
+        field in the IPv6 header, after the encapsulation for
+        the downstream traffic.";
+     reference
+       "Section 2.10 of RFC 6908.";
+   }
+ }
+
+<strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">// Augment NAT module with AFTR parameters</font></strike>
+
+ augment <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"/nat:nat-module/nat:nat-instances/"+
+           "nat:nat-instance/nat:nat-policy"</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"/nat:nat/nat:instances/"+
+            "nat:instance/nat:policy"</font></strong> {
+
+   <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">when "../nat:nat-capabilities/nat:nat-flavor = 'dslite'";</font></strike>
+   description
+     "Augments the <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">NAT44</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">NAPT44</font></strong> module with AFTR parameters.";
+
+   leaf state-migrate {
+     type boolean;
+     default true;
+     description
+       "State migration is enabled by default.
+
+        In the event a new IPv6 address is assigned to the B4 element,
+        the AFTR should migrate existing state to be bound to the new
+        IPv6 address.  This operation ensures that traffic destined to
+        the previous B4's IPv6 address will be redirected to the newer
+        B4's IPv6 address.  The destination IPv6 address for tunneling
+        return traffic from the AFTR should be the last seen as the B4's
+        IPv6 source address from the CPE.
+
+        The AFTR uses the subscriber-mask to determine whether two
+        IPv6 addresses belong to the same CPE (e.g., if the
+        subscriber-mask is set to 56, the AFTR concludes that
+        2001:db8:100:100::1 and 2001:db8:100:100::2 belong to the same
+        CPE assigned with 2001:db8:100:100::/56).";
+
+     reference
+       "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">7785.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">7785: Recommendations for Prefix Binding in the Context
+                  of Softwire Dual-Stack Lite";</font></strong>
+   }
+
+   container mss-clamping {
+     description
+       "MSS rewriting configuration to avoid IPv6 fragmentation.";
+
+     leaf <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">mss-clamping-enable</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">enable</font></strong> {
+       type boolean;
+       description
+         "Enable/disable MSS rewriting feature.";
+     }
+
+     leaf mss-value {
+       type uint16;
+       units "octets";
+       description
+         "Sets the MSS value to be used for MSS rewriting.";
+     }
+   }
+  }
+
+<strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">// Augment NAT mapping entry:  Extended NAT44 mapping Entry</font></strike>
+
+ augment <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"/nat:nat-module/nat:nat-instances/nat:nat-instance/"+</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"/nat:nat/nat:instances/nat:instance/"+</font></strong>
+             "nat:mapping-table/nat:mapping-entry"{
+
+   <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">when "../../nat:nat-capabilities/nat:nat-flavor = 'dslite'";</font></strike>
+   description
+     "Augments the <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">NAT44</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">NAPT44</font></strong> mapping table with DS-Lite specifics.";
+
+   leaf b4-ipv6-address {
+     type inet:ipv6-address;
+     description
+       "Corresponds to the IPv6 address used by the B4 element.";
+     reference
+       "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">6333.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">6333: Dual-Stack Lite Broadband Deployments Following
+                  IPv4 Exhaustion";</font></strong>
+   }
+
+   leaf v6-dscp {
+     type uint8;
+     description
+       "DSCP value used at the softwire level (i.e., IPv6 header).";
+    }
+
+    leaf internal-v4-dscp {
+      type uint8;
+      description
+        "DSCP value of the encapsulated IPv4 packet.";
+    }
+
+    leaf external-v4-dscp {
+      type uint8;
+      description
+        "DSCP value of the translated IPv4 packet as marked by
+         the AFTR.";
+    }
+  }
+ }
+ &lt;CODE ENDS&gt;
+
+4.  DS-Lite B4 YANG Module
+
+ &lt;CODE BEGINS&gt; file <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"ietf-dslite-b4@2017-10-09.yang"</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"ietf-dslite-b4@2017-11-13.yang"</font></strong>
+
+ module ietf-dslite-b4 {
+   yang-version 1.1;
+   namespace "urn:ietf:params:xml:ns:yang:ietf-dslite-b4";
+   prefix dslite-b4;
+
+   import ietf-inet-types { prefix inet; }
+   import ietf-interfaces { prefix if; }
+   import iana-if-type { prefix ianaift; }
+
+   organization <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"Softwire</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"IETF Softwire</font></strong> Working Group";
+
+   contact
+        <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"Mohamed</font></strike>
+
+     <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"WG Web:   &lt;https://datatracker.ietf.org/wg/softwire/&gt;
+      WG List:  &lt;mailto:softwires@ietf.org&gt;
+
+      WG Chair: Ian Farrer
+                &lt;mailto:ianfarrer@gmx.com&gt;
+
+      WG Chair: Yong Cui
+                &lt;mailto:cuiyong@tsinghua.edu.cn&gt;
+
+      Editor:  Mohamed</font></strong> Boucadair <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;mohamed.boucadair@orange.com&gt;
+         Christian</font></strike>
+               <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;mailto:mohamed.boucadair@orange.com&gt;
+
+      Editor:  Chritsian</font></strong> Jacquenet <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;christian.jacquenet@orange.com&gt;</font></strike>
+               <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;mailto:christian.jacquenet@orange.com&gt;
+
+      Editor:</font></strong>  Senthil Sivakumar <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;ssenthil@cisco.com&gt;";</font></strike>
+               <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;mailto:ssenthil@cisco.com&gt;";</font></strong>
+
+   description
+     "This module is a YANG module for DS-Lite B4 implementations.
+
+      Copyright (c) 2017 IETF Trust and the persons identified as
+      authors of the code.  All rights reserved.
+
+      Redistribution and use in source and binary forms, with or
+      without modification, is permitted pursuant to, and subject
+      to the license terms contained in, the Simplified BSD License
+      set forth in Section 4.c of the IETF Trust's Legal Provisions
+      Relating to IETF Documents
+      (http://trustee.ietf.org/license-info).
+      This version of this YANG module is part of RFC XXXX; see
+      the RFC itself for full legal notices.";
+
+   revision <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">2017-10-09</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">2017-11-13</font></strong> {
+     description <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"Early yangdoctors review.";</font></strike>
+       <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"Initial revision.";</font></strong>
+     reference <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">"-ietf-07";
+       }
+
+       revision 2017-08-10 {
+         description "Augment the interfaces</font></strike>
+       <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">"RFC XXXX:</font></strong> YANG <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">module.";
+          reference "-ietf-05";
+       }
+
+       revision 2017-07-27 {
+         description "Separate B4 from AFTR.";
+         reference "-ietf-04";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">Data Modules for the DS-Lite";</font></strong>
+   }
+
+   <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">// Augment Interface module with DS-Lite Softwire</font></strike>
+
+ augment "/if:interfaces/if:interface" {
+   when "if:type = 'ianaift:tunnel'";
+   description
+     "Augments Interface module with B4 parameters.
+      IANA interface types are maintained at this registry:
+      https://www.iana.org/assignments/ianaiftype-mib/ianaiftype-mib.
+
+        tunnel (131),       -- Encapsulation interface";
+
+   leaf b4-ipv6-address {
+     type inet:ipv6-address;
+     description
+       "The IPv6 address used by the B4 element.";
+     reference
+       "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">6333.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">6333: Dual-Stack Lite Broadband Deployments Following
+                  IPv4 Exhaustion";</font></strong>
+   }
+
+   leaf aftr-ipv6-addr {
+     type inet:ipv6-address;
+     description
+       "The AFTR's IPv6 address.";
+     reference
+       "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">6333.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">6333: Dual-Stack Lite Broadband Deployments Following
+                  IPv4 Exhaustion";</font></strong>
+   }
+
+   leaf b4-ipv4-address {
+     type inet:ipv4-address;
+     default "192.0.0.2";
+     description
+       "IPv4 address of the DS-Lite B4.
+
+        192.0.0.0/29 is reserved for the B4 element.
+
+        This address can be used to report ICMP problems and will
+        appear in traceroute outputs.";
+      reference
+        "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">6333.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">6333: Dual-Stack Lite Broadband Deployments Following
+                   IPv4 Exhaustion";</font></strong>
+   }
+
+   leaf tunnel-mtu {
+     type uint16;
+     description
+       "Configures a tunnel MTU.
+
+        [RFC6908] specifies that since fragmentation and reassembly is
+        not optimal, the operator should do everything possible to
+        eliminate the need for it.  If the operator uses simple
+        IPv4-in-IPv6 softwire, it is recommended that the MTU size of
+        the IPv6 network between the B4 and the AFTR accounts for
+        the additional overhead (40 bytes).";
+      reference
+        "RFC <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">6908.";</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">6908: Deployment Considerations for Dual-Stack Lite";</font></strong>
+   }
+
+   leaf v6-v4-dscp-preservation {
+     type boolean;
+     description
+       "Copies the DSCP value from the IPv6 header and vice versa.
+
+        Operators should use this model by provisioning the network such
+        that the AFTR copies the DSCP value in the IPv4 header to
+        the Traffic Class field in the IPv6 header, after the
+        encapsulation for the downstream traffic.";
+     reference
+       "Section 2.10 of RFC 6908.";
+   }
+  }
+ }
+ &lt;CODE ENDS&gt;
+
+5.  Security Considerations
+
+   The YANG module defined in this <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">memo</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">document</font></strong> is designed to be accessed
+   via
+   <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">the</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">network management protocols such as</font></strong> NETCONF <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">protocol [RFC6241].</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">[RFC6241] or
+   RESTCONF [RFC8040].</font></strong>  The lowest NETCONF layer is the secure transport <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">layer</font></strike>
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">layer,</font></strong> and the <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">support of SSH is mandatory to
+   implement</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">mandatory-to-implement</font></strong> secure transport <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">is Secure
+   Shell (SSH)</font></strong> [RFC6242].  The <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">lowest RESTCONF layer is HTTPS, and the
+   mandatory-to-implement secure transport is TLS [RFC5246].
+
+   The</font></strong> NETCONF access control model [RFC6536] provides <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">the</font></strong> means to
+   restrict access for particular NETCONF <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">or RESTCONF</font></strong> users to a <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">pre-configured</font></strike>
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">preconfigured</font></strong> subset of all available NETCONF <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">or RESTCONF</font></strong> protocol
+   operations and <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">contents.</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">content.</font></strong>
+
+   All data nodes defined in the YANG module which can be created,
+   modified and deleted (i.e., config true, which is the default).
+   These data nodes are considered sensitive.  Write operations (e.g.,
+   edit-config) applied to these data nodes without proper protection
+   can negatively affect network operations.
+
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">Security considerations related to DS-Lite are discussed in
+   [RFC6333].</font></strong>
+
+6.  IANA Considerations
+
+   This document requests IANA to register the following URIs in the
+   "IETF XML Registry" [RFC3688]:
+
+            URI: urn:ietf:params:xml:ns:yang:ietf-dslite-aftr
+            Registrant Contact: The IESG.
+            XML: N/A; the requested URI is an XML namespace.
+
+            URI: urn:ietf:params:xml:ns:yang:ietf-dslite-b4
+            Registrant Contact: The IESG.
+            XML: N/A; the requested URI is an XML namespace.
+
+   This document requests IANA to register the following YANG modules in
+   the "YANG Module Names" registry [RFC7950].
+
+            name: ietf-dslite-aftr
+            namespace: urn:ietf:params:xml:ns:yang:ietf-dslite-aftr
+            prefix: dslite-aftr
+            reference: RFC XXXX
+
+            name: ietf-dslite-b4
+            namespace: urn:ietf:params:xml:ns:yang:ietf-dslite-b4
+            prefix: dslite-b4
+            reference: RFC XXXX
+
+7.  Acknowledgements
+
+   Thanks to <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">Q.</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">Qin</font></strong> Wu for identifying a compiling error.  Mahesh
+   Jethanandani provided an <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">eraly ynagdoctors</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">early yangdoctors</font></strong> review; many thanks to
+   him.
+
+   Many thanks to Ian Farrer for the review and comments
+
+8.  References
+
+8.1.  Normative references
+
+   [I-D.ietf-opsawg-nat-yang]
+              Boucadair, M., Sivakumar, S., Jacquenet, C., Vinapamula,
+              S., and Q. Wu, "A YANG Data Model for Network Address
+              Translation (NAT) and Network Prefix Translation (NPT)",
+              <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">draft-ietf-opsawg-nat-yang-05</font></strike>
+              <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">draft-ietf-opsawg-nat-yang-07</font></strong> (work in progress), October
+              2017.
+
+   [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
+              DOI 10.17487/RFC3688, January 2004,
+              &lt;https://www.rfc-editor.org/info/rfc3688&gt;.
+
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">[RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
+              (TLS) Protocol Version 1.2", RFC 5246,
+              DOI 10.17487/RFC5246, August 2008,
+              &lt;https://www.rfc-editor.org/info/rfc5246&gt;.</font></strong>
+
+   [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
+              and A. Bierman, Ed., "Network Configuration Protocol
+              (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
+              &lt;https://www.rfc-editor.org/info/rfc6241&gt;.
+
+   [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
+              Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
+              &lt;https://www.rfc-editor.org/info/rfc6242&gt;.
+
+   [RFC6333]  Durand, A., Droms, R., Woodyatt, J., and Y. Lee, "Dual-
+              Stack Lite Broadband Deployments Following IPv4
+              Exhaustion", RFC 6333, DOI 10.17487/RFC6333, August 2011,
+              &lt;https://www.rfc-editor.org/info/rfc6333&gt;.
+
+   [RFC6536]  Bierman, A. and M. Bjorklund, "Network Configuration
+              Protocol (NETCONF) Access Control Model", RFC 6536,
+              DOI 10.17487/RFC6536, March 2012,
+              &lt;https://www.rfc-editor.org/info/rfc6536&gt;.
+
+   [RFC6991]  Schoenwaelder, J., Ed., "Common YANG Data Types",
+              RFC 6991, DOI 10.17487/RFC6991, July 2013,
+              &lt;https://www.rfc-editor.org/info/rfc6991&gt;.
+
+   [RFC7223]  Bjorklund, M., "A YANG Data Model for Interface
+              Management", RFC 7223, DOI 10.17487/RFC7223, May 2014,
+              &lt;https://www.rfc-editor.org/info/rfc7223&gt;.
+
+   [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
+              RFC 7950, DOI 10.17487/RFC7950, August 2016,
+              &lt;https://www.rfc-editor.org/info/rfc7950&gt;.
+
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">[RFC8040]  Bierman, A., Bjorklund, M., and K. Watsen, "RESTCONF
+              Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
+              &lt;https://www.rfc-editor.org/info/rfc8040&gt;.</font></strong>
+
+8.2.  Informative references
+
+   [I-D.boucadair-pcp-yang]
+              Boucadair, M., Jacquenet, C., Sivakumar, S., and S.
+              Vinapamula, "YANG <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">Data Models</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">Modules</font></strong> for the Port Control Protocol
+              (PCP)", <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">draft-boucadair-pcp-yang-04</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">draft-boucadair-pcp-yang-05</font></strong> (work in progress), <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">May</font></strike>
+              <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">October</font></strong> 2017.
+
+   <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">[I-D.ietf-netmod-yang-tree-diagrams]
+              Bjorklund, M.</font></strike>
+
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">[I-D.ietf-netmod-acl-model]
+              Jethanandani, M., Huang, L., Agarwal, S.,</font></strong> and <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">L. Berger, "YANG Tree Diagrams", draft-
+              ietf-netmod-yang-tree-diagrams-01</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">D. Blair,
+              "Network Access Control List (ACL) YANG Data Model",
+              draft-ietf-netmod-acl-model-14</font></strong> (work in progress), <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">June</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">October</font></strong>
+              2017.
+
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">[RFC3022]  Srisuresh, P. and K. Egevang, "Traditional IP Network
+              Address Translator (Traditional NAT)", RFC 3022,
+              DOI 10.17487/RFC3022, January 2001,
+              &lt;https://www.rfc-editor.org/info/rfc3022&gt;.</font></strong>
+
+   [RFC6087]  Bierman, A., "Guidelines for Authors and Reviewers of YANG
+              Data Model Documents", RFC 6087, DOI 10.17487/RFC6087,
+              January 2011, &lt;https://www.rfc-editor.org/info/rfc6087&gt;.
+
+   [RFC6908]  Lee, Y., Maglione, R., Williams, C., Jacquenet, C., and M.
+              Boucadair, "Deployment Considerations for Dual-Stack
+              Lite", RFC 6908, DOI 10.17487/RFC6908, March 2013,
+              &lt;https://www.rfc-editor.org/info/rfc6908&gt;.
+
+   [RFC7785]  Vinapamula, S. and M. Boucadair, "Recommendations for
+              Prefix Binding in the Context of Softwire Dual-Stack
+              Lite", RFC 7785, DOI 10.17487/RFC7785, February 2016,
+              &lt;https://www.rfc-editor.org/info/rfc7785&gt;.
+
+Appendix A.  <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">B4 Example
+
+   The following example shows a B4 element (2001:db8:0:1::1) that is
+   configured with an AFTR element (2001:db8:0:2::1).  The B4 element is
+   also instructed to preserve the DSCP marking.
+
+   &lt;interface&gt;
+      &lt;name&gt;myB4&lt;/name&gt;
+      &lt;type&gt;ianaift:tunnel&lt;/type&gt;
+      &lt;enabled&gt;true&lt;/enabled&gt;
+      &lt;b4-ipv6-address&gt;2001:db8:0:1::1&lt;/b4-ipv6-address&gt;
+      &lt;aftr-ipv6-addr&gt;2001:db8:0:2::1&lt;/aftr-ipv6-addr&gt;
+      &lt;v6-v4-dscp-preservation&gt;true&lt;/v6-v4-dscp-preservation&gt;
+   &lt;/interface&gt;
+
+Appendix B.  AFTR</font></strong> Examples
+
+   The following example shows an AFTR that is reachable at <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">2001:db8::2.</font></strike>
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">2001:db8:0:2::1.</font></strong>  Also, this XML snippet indicates that the AFTR is
+   provided with an IPv4 address (192.0.0.1) to be used for
+   troubleshooting purposes such as reporting problems to B4s.
+   Moreover, the AFTR is instructed to limit the number of softwires per
+   subscriber to '1'.
+
+   <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">Note that a subscriber is identified by a subscriber-mask ([RFC7785])
+   that can be configured by means of [I-D.ietf-opsawg-nat-yang].</font></strong>
+
+   &lt;interface&gt;
+      &lt;name&gt;myAFTR&lt;/name&gt;
+      &lt;type&gt;ianaift:tunnel&lt;/type&gt;
+      &lt;enabled&gt;true&lt;/enabled&gt;
+      <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;aftr-ipv6-address&gt;2001:db8::2&lt;/aftr-ipv6-address&gt;</font></strike>
+      <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;aftr-ipv6-address&gt;2001:db8:0:2::1&lt;/aftr-ipv6-address&gt;</font></strong>
+      &lt;aftr-ipv4-address&gt;192.0.0.1&lt;/aftr-ipv4-address&gt;
+      &lt;max-softwire-per-subscriber&gt;1&lt;/max-softwire-per-subscriber&gt;
+   &lt;/interface&gt;
+
+   The following shows an XML excerpt depicting a dynamic UDP mapping
+   entry maintained by a DS-Lite <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">AFTR.  In reference to this example,</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">AFTR for a packet received from</font></strong> the <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">B4
+   element introduced in Appendix A.  Concretely, this</font></strong> UDP packet
+   received with a source IPv6 address <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">(2001:db8::1),</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">(2001:db8:0:1::1),</font></strong> a source IPv4
+   address <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">(192.0.2.1)</font></strike> <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">(192.0.2.1),</font></strong> and source port number (1568) is translated into
+   a UDP packet having a source IPv4 address (198.51.100.1) and source
+   port <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">number</font></strong> (15000).  The <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">remaining</font></strong> lifetime of this mapping is 300
+   seconds.
+
+   &lt;mapping-entry&gt;
+     &lt;index&gt;15&lt;/index&gt;
+     &lt;type&gt;
+        dynamic-explicit
+     &lt;/type&gt;
+     &lt;transport-protocol&gt;
+        17
+     &lt;/transport-protocol&gt;
+     &lt;b4-ipv6-address&gt;
+        <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">2001:db8::1</font></strike>
+        <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">2001:db8:0:1::1</font></strong>
+     &lt;/b4-ipv6-address&gt;
+     &lt;internal-src-address&gt;
+        192.0.2.1
+     <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;/internal-dst-address&gt;</font></strike>
+     <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;/internal-src-address&gt;</font></strong>
+     &lt;internal-src-port&gt;
+        <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;single-port-number&gt;</font></strike>
+        <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;start-port-number&gt;</font></strong>
+           1568
+        <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;/single-port-number&gt;
+     &lt;/internal-dst-port&gt;
+     &lt;external-dst-address&gt;</font></strike>
+        <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;/start-port-number&gt;
+     &lt;/internal-src-port&gt;
+     &lt;external-src-address&gt;</font></strong>
+        198.51.100.1
+     <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;/external-dst-address&gt;
+     &lt;external-dst-port&gt;
+        &lt;single-port-number&gt;</font></strike>
+     <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;/external-src-address&gt;
+     &lt;external-src-port&gt;
+        &lt;start-port-number&gt;</font></strong>
+           15000
+        <strike style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="red">&lt;/single-port-number&gt;
+     &lt;/external-dst-port&gt;</font></strike>
+        <strong style="font-size: 14.3px !important; line-height: 17.71px !important;"><font style="font-size: 14.3px !important; line-height: 17.71px !important;" color="green">&lt;/start-port-number&gt;
+     &lt;/external-src-port&gt;</font></strong>
+     &lt;lifetime&gt;
+        300
+     &lt;/lifetime&gt;
+   &lt;/mapping-entry&gt;
+
+Authors' Addresses
+
+   Mohamed Boucadair
+   Orange
+   Rennes  35000
+   France
+
+   EMail: mohamed.boucadair@orange.com
+
+   Christian Jacquenet
+   Orange
+   Rennes  35000
+   France
+
+   EMail: christian.jacquenet@orange.com
+   Senthil Sivakumar
+   Cisco Systems
+   7100-8 Kit Creek Road
+   Research Triangle Park, North Carolina  27709
+   USA
+
+   Phone: +1 919 392 5158
+   EMail: ssenthil@cisco.com
+</pre>
+
+</body></html>
