@@ -103,8 +103,7 @@
       this document:<list style="symbols">
           <t>"This version of this YANG module is part of RFC XXXX;"</t>
 
-          <t>"RFC XXXX: A YANG Data Model for Network Address Translation
-          (NAT) and Network Prefix Translation (NPT)";</t>
+          <t>"RFC XXXX: YANG Data Modules for the DS-Lite";</t>
 
           <t>"reference: RFC XXXX"</t>
         </list></t>
@@ -117,7 +116,7 @@
       target="RFC6333"></xref>, using the YANG data modeling language <xref
       target="RFC7950"></xref>. Both the Address Family Transition Router
       (AFTR) and Basic Bridging BroadBand (B4) elements are covered by this
-      specification. </t>
+      specification.</t>
 
       <t>As a reminder, <xref target="arch"></xref> illustrates an overview of
       the DS-Lite architecture that involves AFTR and B4 elements.</t>
@@ -300,7 +299,7 @@
           <t>The IPv4 DSCP marking as set by the AFTR in its external
           interface (external-v4-dscp): An AFTR can be instructed to preserve
           the same marking or to set it to another value when forwarding an
-          IPv4 packet upstream. </t>
+          IPv4 packet upstream.</t>
         </list></t>
 
       <t>Access Control List (ACL) and Quality of Service (QoS) policies
@@ -398,7 +397,7 @@ module ietf-dslite-aftr {
      Editor:  Mohamed Boucadair 
               <mailto:mohamed.boucadair@orange.com>
    
-     Editor:  Chritsian Jacquenet 
+     Editor:  Christian Jacquenet 
               <mailto:christian.jacquenet@orange.com>
 
      Editor:  Senthil Sivakumar 
@@ -626,7 +625,7 @@ module ietf-dslite-b4 {
      Editor:  Mohamed Boucadair 
               <mailto:mohamed.boucadair@orange.com>
    
-     Editor:  Chritsian Jacquenet 
+     Editor:  Christian Jacquenet 
               <mailto:christian.jacquenet@orange.com>
 
      Editor:  Senthil Sivakumar 
@@ -746,10 +745,35 @@ augment "/if:interfaces/if:interface" {
       protocol operations and content.</t>
 
       <t>All data nodes defined in the YANG module which can be created,
-      modified and deleted (i.e., config true, which is the default). These
-      data nodes are considered sensitive. Write operations (e.g.,
-      edit-config) applied to these data nodes without proper protection can
-      negatively affect network operations.</t>
+      modified and deleted (i.e., config true, which is the default) are
+      considered sensitive. Write operations (e.g., edit-config) applied to
+      these data nodes without proper protection can negatively affect network
+      operations. An attacker who is able to access to the B4/AFTR can
+      undertake various attacks, such as:<list style="symbols">
+          <t>Set the value of 'aftr-ipv6-addr' on the B4 to point to an
+          illegitimate AFTR so that it can intercept all the traffic sent by a
+          B4. Illegitimately intercepting users' traffic is a attack with
+          severe implications on privacy.</t>
+
+          <t>Set the MTU to a low value which may increase the number of
+          fragments (tunnel-mtu for both B4 and AFTR). </t>
+
+          <t>Set 'max-softwire-per-subscriber' to an arbitrary high value,
+          which will be exploited by a misbehaving user to grab more resources
+          (by mounting as many softwires as required to get more external IP
+          addresses/ports) or to perform a Denial-of-Service on the AFTR by
+          mounting a massive number of softwires. </t>
+
+          <t>Set 'state-migrate' to 'false' on the AFTR. This action may lead
+          to a service degradation for the users.</t>
+
+          <t>Set 'v6-v4-dscp-preservation' to 'false" may lead to a service
+          degradation if some policies are applied on the network based on the
+          DSCP value. </t>
+        </list></t>
+
+      <t>Additional security considerations are discussed in <xref
+      target="I-D.ietf-opsawg-nat-yang"></xref>.</t>
 
       <t>Security considerations related to DS-Lite are discussed in <xref
       target="RFC6333"></xref>.</t>
@@ -857,7 +881,7 @@ augment "/if:interfaces/if:interface" {
       2001:db8:0:2::1. Also, this XML snippet indicates that the AFTR is
       provided with an IPv4 address (192.0.0.1) to be used for troubleshooting
       purposes such as reporting problems to B4s. Moreover, the AFTR is
-      instructed to limit the number of softwires per subscriber to '1'. </t>
+      instructed to limit the number of softwires per subscriber to '1'.</t>
 
       <t>Note that a subscriber is identified by a subscriber-mask (<xref
       target="RFC7785"></xref>) that can be configured by means of <xref

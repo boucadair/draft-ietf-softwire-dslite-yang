@@ -5,9 +5,9 @@
 Network Working Group                                       M. Boucadair
 Internet-Draft                                              C. Jacquenet
 Intended status: Standards Track                                  Orange
-Expires: May 11, 2018                                       S. Sivakumar
+Expires: May 13, 2018                                       S. Sivakumar
                                                            Cisco Systems
-                                                        November 7, 2017
+                                                        November 9, 2017
 
 
                    YANG Data Modules for the DS-Lite
@@ -25,8 +25,7 @@ Editorial Note (To be removed by RFC Editor)
 
    o  "This version of this YANG module is part of RFC XXXX;"
 
-   o  "RFC XXXX: A YANG Data Model for Network Address Translation (NAT)
-      and Network Prefix Translation (NPT)";
+   o  "RFC XXXX: YANG Data Modules for the DS-Lite";
 
    o  "reference: RFC XXXX"
 
@@ -45,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 11, 2018.
+   This Internet-Draft will expire on May 13, 2018.
 
 
 
@@ -53,7 +52,8 @@ Status of This Memo
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 1]
+
+Boucadair, et al.         Expires May 13, 2018                  [Page 1]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -83,13 +83,13 @@ Table of Contents
    4.  DS-Lite B4 YANG Module  . . . . . . . . . . . . . . . . . . .  13
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .  15
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  16
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
      8.1.  Normative references  . . . . . . . . . . . . . . . . . .  17
      8.2.  Informative references  . . . . . . . . . . . . . . . . .  18
-   Appendix A.  B4 Example . . . . . . . . . . . . . . . . . . . . .  19
-   Appendix B.  AFTR Examples  . . . . . . . . . . . . . . . . . . .  19
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
+   Appendix A.  B4 Example . . . . . . . . . . . . . . . . . . . . .  20
+   Appendix B.  AFTR Examples  . . . . . . . . . . . . . . . . . . .  20
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 2]
+Boucadair, et al.         Expires May 13, 2018                  [Page 2]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -165,7 +165,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 3]
+Boucadair, et al.         Expires May 13, 2018                  [Page 3]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -221,7 +221,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 4]
+Boucadair, et al.         Expires May 13, 2018                  [Page 4]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -277,7 +277,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 5]
+Boucadair, et al.         Expires May 13, 2018                  [Page 5]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -333,7 +333,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 6]
+Boucadair, et al.         Expires May 13, 2018                  [Page 6]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -389,7 +389,7 @@ module: ietf-dslite-aftr
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 7]
+Boucadair, et al.         Expires May 13, 2018                  [Page 7]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -438,14 +438,14 @@ Internet-Draft                DS-Lite YANG                 November 2017
       Editor:  Mohamed Boucadair
                <mailto:mohamed.boucadair@orange.com>
 
-      Editor:  Chritsian Jacquenet
+      Editor:  Christian Jacquenet
                <mailto:christian.jacquenet@orange.com>
 
       Editor:  Senthil Sivakumar
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 8]
+Boucadair, et al.         Expires May 13, 2018                  [Page 8]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -501,7 +501,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                  [Page 9]
+Boucadair, et al.         Expires May 13, 2018                  [Page 9]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -557,7 +557,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 10]
+Boucadair, et al.         Expires May 13, 2018                 [Page 10]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -613,7 +613,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 11]
+Boucadair, et al.         Expires May 13, 2018                 [Page 11]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -669,7 +669,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 12]
+Boucadair, et al.         Expires May 13, 2018                 [Page 12]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -703,7 +703,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
       Editor:  Mohamed Boucadair
                <mailto:mohamed.boucadair@orange.com>
 
-      Editor:  Chritsian Jacquenet
+      Editor:  Christian Jacquenet
                <mailto:christian.jacquenet@orange.com>
 
       Editor:  Senthil Sivakumar
@@ -725,7 +725,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 13]
+Boucadair, et al.         Expires May 13, 2018                 [Page 13]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -781,7 +781,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 14]
+Boucadair, et al.         Expires May 13, 2018                 [Page 14]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -837,16 +837,41 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 15]
+Boucadair, et al.         Expires May 13, 2018                 [Page 15]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
 
    All data nodes defined in the YANG module which can be created,
-   modified and deleted (i.e., config true, which is the default).
-   These data nodes are considered sensitive.  Write operations (e.g.,
-   edit-config) applied to these data nodes without proper protection
-   can negatively affect network operations.
+   modified and deleted (i.e., config true, which is the default) are
+   considered sensitive.  Write operations (e.g., edit-config) applied
+   to these data nodes without proper protection can negatively affect
+   network operations.  An attacker who is able to access to the B4/AFTR
+   can undertake various attacks, such as:
+
+   o  Set the value of 'aftr-ipv6-addr' on the B4 to point to an
+      illegitimate AFTR so that it can intercept all the traffic sent by
+      a B4.  Illegitimately intercepting users' traffic is a attack with
+      severe implications on privacy.
+
+   o  Set the MTU to a low value which may increase the number of
+      fragments (tunnel-mtu for both B4 and AFTR).
+
+   o  Set 'max-softwire-per-subscriber' to an arbitrary high value,
+      which will be exploited by a misbehaving user to grab more
+      resources (by mounting as many softwires as required to get more
+      external IP addresses/ports) or to perform a Denial-of-Service on
+      the AFTR by mounting a massive number of softwires.
+
+   o  Set 'state-migrate' to 'false' on the AFTR.  This action may lead
+      to a service degradation for the users.
+
+   o  Set 'v6-v4-dscp-preservation' to 'false" may lead to a service
+      degradation if some policies are applied on the network based on
+      the DSCP value.
+
+   Additional security considerations are discussed in
+   [I-D.ietf-opsawg-nat-yang].
 
    Security considerations related to DS-Lite are discussed in
    [RFC6333].
@@ -863,6 +888,15 @@ Internet-Draft                DS-Lite YANG                 November 2017
             URI: urn:ietf:params:xml:ns:yang:ietf-dslite-b4
             Registrant Contact: The IESG.
             XML: N/A; the requested URI is an XML namespace.
+
+
+
+
+
+Boucadair, et al.         Expires May 13, 2018                 [Page 16]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
 
    This document requests IANA to register the following YANG modules in
    the "YANG Module Names" registry [RFC7950].
@@ -885,18 +919,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
    him.
 
    Many thanks to Ian Farrer for the review and comments
-
-
-
-
-
-
-
-
-Boucadair, et al.         Expires May 11, 2018                 [Page 16]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
 
 8.  References
 
@@ -923,6 +945,15 @@ Internet-Draft                DS-Lite YANG                 November 2017
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
 
+
+
+
+
+Boucadair, et al.         Expires May 13, 2018                 [Page 17]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/info/rfc6242>.
@@ -944,15 +975,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
    [RFC7223]  Bjorklund, M., "A YANG Data Model for Interface
               Management", RFC 7223, DOI 10.17487/RFC7223, May 2014,
               <https://www.rfc-editor.org/info/rfc7223>.
-
-
-
-
-
-Boucadair, et al.         Expires May 11, 2018                 [Page 17]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
 
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
@@ -981,6 +1003,13 @@ Internet-Draft                DS-Lite YANG                 November 2017
               DOI 10.17487/RFC3022, January 2001,
               <https://www.rfc-editor.org/info/rfc3022>.
 
+
+
+Boucadair, et al.         Expires May 13, 2018                 [Page 18]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
    [RFC6087]  Bierman, A., "Guidelines for Authors and Reviewers of YANG
               Data Model Documents", RFC 6087, DOI 10.17487/RFC6087,
               January 2011, <https://www.rfc-editor.org/info/rfc6087>.
@@ -1005,7 +1034,34 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 18]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.         Expires May 13, 2018                 [Page 19]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -1061,7 +1117,7 @@ Appendix B.  AFTR Examples
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 19]
+Boucadair, et al.         Expires May 13, 2018                 [Page 20]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -1117,7 +1173,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 20]
+Boucadair, et al.         Expires May 13, 2018                 [Page 21]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -1173,4 +1229,4 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 11, 2018                 [Page 21]
+Boucadair, et al.         Expires May 13, 2018                 [Page 22]
