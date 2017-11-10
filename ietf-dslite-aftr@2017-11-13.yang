@@ -25,7 +25,7 @@ module ietf-dslite-aftr {
      Editor:  Mohamed Boucadair 
               <mailto:mohamed.boucadair@orange.com>
    
-     Editor:  Chritsian Jacquenet 
+     Editor:  Christian Jacquenet 
               <mailto:christian.jacquenet@orange.com>
 
      Editor:  Senthil Sivakumar 
@@ -165,8 +165,28 @@ augment "/nat:nat/nat:instances/"+
     reference
       "RFC 7785: Recommendations for Prefix Binding in the Context
                  of Softwire Dual-Stack Lite"; 
-  }     
-    
+  }
+
+  leaf b4-address-change-limit {
+    type uint32;
+    units "seconds";
+    default '1800';
+    description
+      "Minimum number of seconds between successive B4's IPv6 address
+       change from the same prefix.
+
+       Changing the source B4's IPv6 address may be used as an attack
+       vector.  Packets with a new B4's IPv6 address from the same 
+       prefix should be rate-limited.
+
+       It is recommended to set this rate limit to 30 minutes; other
+       values can be set on a per-deployment basis.";
+
+    reference
+      "RFC 7785: Recommendations for Prefix Binding in the Context
+                 of Softwire Dual-Stack Lite"; 
+  }      
+   
   container mss-clamping {
     description 
       "MSS rewriting configuration to avoid IPv6 fragmentation.";
@@ -201,18 +221,24 @@ augment "/nat:nat/nat:instances/nat:instance/"+
   }
 
   leaf v6-dscp {
+    when "/if:interfaces/if:interface/" + 
+          "dslite-aftr:v6-v4-dscp-preservation='true'";
     type uint8;
     description 
       "DSCP value used at the softwire level (i.e., IPv6 header)."; 
    }
 
    leaf internal-v4-dscp {
+    when "/if:interfaces/if:interface/" + 
+          "dslite-aftr:v6-v4-dscp-preservation='true'";
      type uint8;
      description 
        "DSCP value of the encapsulated IPv4 packet."; 
    }
 
    leaf external-v4-dscp {
+    when "/if:interfaces/if:interface/" + 
+          "dslite-aftr:v6-v4-dscp-preservation='true'";
      type uint8;
      description 
        "DSCP value of the translated IPv4 packet as marked by

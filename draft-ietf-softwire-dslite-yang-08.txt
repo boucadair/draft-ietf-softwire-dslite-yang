@@ -5,9 +5,9 @@
 Network Working Group                                       M. Boucadair
 Internet-Draft                                              C. Jacquenet
 Intended status: Standards Track                                  Orange
-Expires: May 13, 2018                                       S. Sivakumar
+Expires: May 14, 2018                                       S. Sivakumar
                                                            Cisco Systems
-                                                        November 9, 2017
+                                                       November 10, 2017
 
 
                    YANG Data Modules for the DS-Lite
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 13, 2018.
+   This Internet-Draft will expire on May 14, 2018.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Boucadair, et al.         Expires May 13, 2018                  [Page 1]
+Boucadair, et al.         Expires May 14, 2018                  [Page 1]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -79,17 +79,17 @@ Table of Contents
      1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
      1.2.  Tree Diagrams . . . . . . . . . . . . . . . . . . . . . .   4
    2.  DS-Lite YANG Modules: An Overview . . . . . . . . . . . . . .   4
-   3.  DS-Lite AFTR YANG Module  . . . . . . . . . . . . . . . . . .   8
-   4.  DS-Lite B4 YANG Module  . . . . . . . . . . . . . . . . . . .  13
+   3.  DS-Lite AFTR YANG Module  . . . . . . . . . . . . . . . . . .   7
+   4.  DS-Lite B4 YANG Module  . . . . . . . . . . . . . . . . . . .  12
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .  15
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
      8.1.  Normative references  . . . . . . . . . . . . . . . . . .  17
      8.2.  Informative references  . . . . . . . . . . . . . . . . .  18
-   Appendix A.  B4 Example . . . . . . . . . . . . . . . . . . . . .  20
-   Appendix B.  AFTR Examples  . . . . . . . . . . . . . . . . . . .  20
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
+   Appendix A.  B4 Example . . . . . . . . . . . . . . . . . . . . .  19
+   Appendix B.  AFTR Examples  . . . . . . . . . . . . . . . . . . .  19
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.         Expires May 13, 2018                  [Page 2]
+Boucadair, et al.         Expires May 14, 2018                  [Page 2]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -165,7 +165,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 13, 2018                  [Page 3]
+Boucadair, et al.         Expires May 14, 2018                  [Page 3]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -173,7 +173,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
    DS-Lite deployment considerations are discussed in [RFC6908].
 
    This document follows the guidelines of [RFC6087], uses the common
-   YANG types defined in [RFC6991], and adopts Network Management
+   YANG types defined in [RFC6991], and adopts the Network Management
    Datastore Architecture (NMDA).
 
 1.1.  Terminology
@@ -221,7 +221,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 13, 2018                  [Page 4]
+Boucadair, et al.         Expires May 14, 2018                  [Page 4]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -233,58 +233,29 @@ Internet-Draft                DS-Lite YANG                 November 2017
       in-IPv6 packets (aftr-ipv6-address).
 
    o  An IPv4 address that is used by the AFTR for troubleshooting
-      purposes (aftr-ipv4-address): According to [RFC6333], that address
-      can be used to report ICMP problems and will appear in traceroute
-      outputs.
+      purposes (aftr-ipv4-address).
 
-   o  The tunnel MTU to avoid fragmentation (tunnel-mtu): Since using an
-      IPv4-in-IPv6 encapsulation to carry IPv4 traffic over IPv6 reduces
-      the effective MTU of the datagram, operators should be able to
-      increase the MTU size by at least 40 bytes to accommodate both the
-      IPv6 encapsulation header and the IPv4 datagram without
-      fragmenting the IPv6 packet (Section 2.2 of [RFC6908]).
+   o  The tunnel MTU, used to avoid fragmentation (tunnel-mtu).
 
    o  A policy to limit the number of DS-Lite softwires per subscriber
-      (max-softwire-per-subscriber): This policy aims to prevent a
-      misbehaving subscriber from mounting several DS-Lite softwires
-      that would consume additional AFTR resources (e.g., get more
-      external ports if the quota were enforced on a per-softwire basis,
-      consume extra processing due to a large number of active
-      softwires) [RFC7785].
+      (max-softwire-per-subscriber).
 
-   o  A DSCP marking policy to be followed when encapsulating/
-      decapsulating packets (v6-v4-dscp-preservation): Section 2.10 of
-      [RFC6908] discusses the uniform model which assumes that
-      implementations of this model copy the DSCP value to the outer IP
-      header at encapsulation and copy the outer header's DSCP value to
-      the inner IP header at decapsulation.  Operators should configure
-      the AFTR so that it copies the DSCP value in the IPv4 header to
-      the Traffic Class field in the IPv6 header, and vice versa.
+   o  A policy to instruct the AFTR whether it must preserve DSCP
+      marking when encapsulating/decapsulating packets (v6-v4-dscp-
+      preservation).
 
    In addition, the AFTR YANG module augments the NAT YANG module
    (policy, in particular) with the following:
 
    o  A policy to instruct the AFTR whether a state can be automatically
-      migrated (state-migrate): This policy avoids stale mappings at the
-      AFTR and minimizes the risk of service disruption for subscribers.
-      According to [RFC7785], the AFTR should migrate existing state to
-      be bound to the new IPv6 address in the event a new IPv6 address
-      is assigned to the B4 element.  This operation ensures that
-      traffic destined to the previous B4's IPv6 address will be
-      redirected to the newer B4's IPv6 address.
+      migrated (state-migrate).
 
-
-
-
-
-Boucadair, et al.         Expires May 13, 2018                  [Page 5]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
+   o  Further, in order to prevent a denial-of-service by frequently
+      changing the source IPv6 address, 'b4-address-change-limit' is
+      used to rate-lmite such changes.
 
    o  An instruction to rewrite the TCP Maximum Segment Size (MSS)
-      option (mss-clamping) to avoid TCP fragmentation (Section 6.3 of
-      [RFC6333]).
+      option (mss-clamping) to avoid TCP fragmentation.
 
    Given that the NAPT table of the AFTR element is extended to include
    the source IPv6 address of incoming packets, the AFTR YANG module
@@ -304,6 +275,13 @@ Internet-Draft                DS-Lite YANG                 November 2017
       element (internal-v4-dscp): This information can be used by the
       AFTR for setting the DSCP of packets relayed to a B4 element.
 
+
+
+Boucadair, et al.         Expires May 14, 2018                  [Page 5]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
    o  The IPv4 DSCP marking as set by the AFTR in its external interface
       (external-v4-dscp): An AFTR can be instructed to preserve the same
       marking or to set it to another value when forwarding an IPv4
@@ -317,27 +295,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
    [RFC6333] are out of scope.  A YANG module for PCP is documented in
    [I-D.boucadair-pcp-yang].
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.         Expires May 13, 2018                  [Page 6]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
 module: ietf-dslite-aftr
   augment /if:interfaces/if:interface:
     +--rw aftr-ipv6-address?             inet:ipv6-address
@@ -346,7 +303,8 @@ module: ietf-dslite-aftr
     +--rw max-softwire-per-subscriber?   uint8
     +--rw v6-v4-dscp-preservation?       boolean
   augment /nat:nat/nat:instances/nat:instance/nat:policy:
-    +--rw state-migrate?   boolean
+    +--rw state-migrate?             boolean
+    +--rw b4-address-change-limit?   uint32
     +--rw mss-clamping
        +--rw enable?      boolean
        +--rw mss-value?   uint16
@@ -373,26 +331,18 @@ module: ietf-dslite-aftr
    o  An IPv4 address that is used by a B4 element for troubleshooting
       purposes (b4-ipv4-address).
 
+
+
+Boucadair, et al.         Expires May 14, 2018                  [Page 6]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
    o  The tunnel MTU at the B4 side to avoid fragmentation (tunnel-mtu).
 
    o  An instruction whether DSCP marking is to be preserved when
       encapsulating an IPv4 packet in an IPv6 packet (v6-v4-dscp-
       preservation).
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.         Expires May 13, 2018                  [Page 7]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
 
    module: ietf-dslite-b4
      augment /if:interfaces/if:interface:
@@ -436,20 +386,20 @@ Internet-Draft                DS-Lite YANG                 November 2017
                 <mailto:cuiyong@tsinghua.edu.cn>
 
       Editor:  Mohamed Boucadair
+
+
+
+Boucadair, et al.         Expires May 14, 2018                  [Page 7]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
                <mailto:mohamed.boucadair@orange.com>
 
       Editor:  Christian Jacquenet
                <mailto:christian.jacquenet@orange.com>
 
       Editor:  Senthil Sivakumar
-
-
-
-Boucadair, et al.         Expires May 13, 2018                  [Page 8]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
                <mailto:ssenthil@cisco.com>";
 
     description
@@ -492,20 +442,20 @@ Internet-Draft                DS-Lite YANG                 November 2017
      reference
        "RFC 6333: Dual-Stack Lite Broadband Deployments Following
                   IPv4 Exhaustion";
+
+
+
+Boucadair, et al.         Expires May 14, 2018                  [Page 8]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
    }
 
    leaf aftr-ipv4-address {
      type inet:ipv4-address;
      default "192.0.0.1";
      description
-
-
-
-Boucadair, et al.         Expires May 13, 2018                  [Page 9]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
        "IPv4 address of the DS-Lite AFTR.
 
         192.0.0.1 is reserved for the AFTR element.
@@ -548,20 +498,20 @@ Internet-Draft                DS-Lite YANG                 November 2017
         softwires).";
 
      reference
+
+
+
+Boucadair, et al.         Expires May 14, 2018                  [Page 9]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
        "Section 4 of RFC 7785.";
    }
 
    leaf v6-v4-dscp-preservation {
      type boolean;
      description
-
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 10]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
        "Copies the DSCP value from the IPv6 header and vice versa.
 
         According to Section 2.10 of [RFC6908], operators should
@@ -604,20 +554,40 @@ Internet-Draft                DS-Lite YANG                 November 2017
                   of Softwire Dual-Stack Lite";
    }
 
+
+
+
+Boucadair, et al.         Expires May 14, 2018                 [Page 10]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
+   leaf b4-address-change-limit {
+     type uint32;
+     units "seconds";
+     default '1800';
+     description
+       "Minimum number of seconds between successive B4's IPv6 address
+        change from the same prefix.
+
+        Changing the source B4's IPv6 address may be used as an attack
+        vector.  Packets with a new B4's IPv6 address from the same
+        prefix should be rate-limited.
+
+        It is recommended to set this rate limit to 30 minutes; other
+        values can be set on a per-deployment basis.";
+
+     reference
+       "RFC 7785: Recommendations for Prefix Binding in the Context
+                  of Softwire Dual-Stack Lite";
+   }
+
    container mss-clamping {
      description
        "MSS rewriting configuration to avoid IPv6 fragmentation.";
 
      leaf enable {
        type boolean;
-
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 11]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
        description
          "Enable/disable MSS rewriting feature.";
      }
@@ -640,24 +610,38 @@ Internet-Draft                DS-Lite YANG                 November 2017
      type inet:ipv6-address;
      description
        "Corresponds to the IPv6 address used by the B4 element.";
+
+
+
+Boucadair, et al.         Expires May 14, 2018                 [Page 11]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
      reference
        "RFC 6333: Dual-Stack Lite Broadband Deployments Following
                   IPv4 Exhaustion";
    }
 
    leaf v6-dscp {
+     when "/if:interfaces/if:interface/" +
+           "dslite-aftr:v6-v4-dscp-preservation='true'";
      type uint8;
      description
        "DSCP value used at the softwire level (i.e., IPv6 header).";
     }
 
     leaf internal-v4-dscp {
+     when "/if:interfaces/if:interface/" +
+           "dslite-aftr:v6-v4-dscp-preservation='true'";
       type uint8;
       description
         "DSCP value of the encapsulated IPv4 packet.";
     }
 
     leaf external-v4-dscp {
+     when "/if:interfaces/if:interface/" +
+           "dslite-aftr:v6-v4-dscp-preservation='true'";
       type uint8;
       description
         "DSCP value of the translated IPv4 packet as marked by
@@ -666,13 +650,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
   }
  }
  <CODE ENDS>
-
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 12]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
 
 4.  DS-Lite B4 YANG Module
 
@@ -688,6 +665,14 @@ Internet-Draft                DS-Lite YANG                 November 2017
    import iana-if-type { prefix ianaift; }
 
    organization "IETF Softwire Working Group";
+
+
+
+
+Boucadair, et al.         Expires May 14, 2018                 [Page 12]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
 
    contact
 
@@ -722,14 +707,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
       Relating to IETF Documents
       (http://trustee.ietf.org/license-info).
 
-
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 13]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
       This version of this YANG module is part of RFC XXXX; see
       the RFC itself for full legal notices.";
 
@@ -745,6 +722,14 @@ Internet-Draft                DS-Lite YANG                 November 2017
    description
      "Augments Interface module with B4 parameters.
       IANA interface types are maintained at this registry:
+
+
+
+Boucadair, et al.         Expires May 14, 2018                 [Page 13]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
       https://www.iana.org/assignments/ianaiftype-mib/ianaiftype-mib.
 
         tunnel (131),       -- Encapsulation interface";
@@ -778,14 +763,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
         This address can be used to report ICMP problems and will
         appear in traceroute outputs.";
       reference
-
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 14]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
         "RFC 6333: Dual-Stack Lite Broadband Deployments Following
                    IPv4 Exhaustion";
    }
@@ -801,6 +778,14 @@ Internet-Draft                DS-Lite YANG                 November 2017
         IPv4-in-IPv6 softwire, it is recommended that the MTU size of
         the IPv6 network between the B4 and the AFTR accounts for
         the additional overhead (40 bytes).";
+
+
+
+Boucadair, et al.         Expires May 14, 2018                 [Page 14]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
       reference
         "RFC 6908: Deployment Considerations for Dual-Stack Lite";
    }
@@ -835,13 +820,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
    preconfigured subset of all available NETCONF or RESTCONF protocol
    operations and content.
 
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 15]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
    All data nodes defined in the YANG module which can be created,
    modified and deleted (i.e., config true, which is the default) are
    considered sensitive.  Write operations (e.g., edit-config) applied
@@ -857,6 +835,13 @@ Internet-Draft                DS-Lite YANG                 November 2017
    o  Set the MTU to a low value which may increase the number of
       fragments (tunnel-mtu for both B4 and AFTR).
 
+
+
+Boucadair, et al.         Expires May 14, 2018                 [Page 15]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
    o  Set 'max-softwire-per-subscriber' to an arbitrary high value,
       which will be exploited by a misbehaving user to grab more
       resources (by mounting as many softwires as required to get more
@@ -865,6 +850,9 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
    o  Set 'state-migrate' to 'false' on the AFTR.  This action may lead
       to a service degradation for the users.
+
+   o  Set 'b4-address-change-limit" to an arbitrary low value can ease
+      DoS attacks based on frequent change of B4 IPv6 address.
 
    o  Set 'v6-v4-dscp-preservation' to 'false" may lead to a service
       degradation if some policies are applied on the network based on
@@ -889,15 +877,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
             Registrant Contact: The IESG.
             XML: N/A; the requested URI is an XML namespace.
 
-
-
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 16]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
    This document requests IANA to register the following YANG modules in
    the "YANG Module Names" registry [RFC7950].
 
@@ -912,13 +891,20 @@ Internet-Draft                DS-Lite YANG                 November 2017
             reference: RFC XXXX
 
 
+
+
+Boucadair, et al.         Expires May 14, 2018                 [Page 16]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
+
 7.  Acknowledgements
 
    Thanks to Qin Wu for identifying a compiling error.  Mahesh
    Jethanandani provided an early yangdoctors review; many thanks to
    him.
 
-   Many thanks to Ian Farrer for the review and comments
+   Many thanks to Ian Farrer for the review and comments.
 
 8.  References
 
@@ -945,15 +931,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
 
-
-
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 17]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/info/rfc6242>.
@@ -967,6 +944,15 @@ Internet-Draft                DS-Lite YANG                 November 2017
               Protocol (NETCONF) Access Control Model", RFC 6536,
               DOI 10.17487/RFC6536, March 2012,
               <https://www.rfc-editor.org/info/rfc6536>.
+
+
+
+
+
+Boucadair, et al.         Expires May 14, 2018                 [Page 17]
+
+Internet-Draft                DS-Lite YANG                 November 2017
+
 
    [RFC6991]  Schoenwaelder, J., Ed., "Common YANG Data Types",
               RFC 6991, DOI 10.17487/RFC6991, July 2013,
@@ -1003,13 +989,6 @@ Internet-Draft                DS-Lite YANG                 November 2017
               DOI 10.17487/RFC3022, January 2001,
               <https://www.rfc-editor.org/info/rfc3022>.
 
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 18]
-
-Internet-Draft                DS-Lite YANG                 November 2017
-
-
    [RFC6087]  Bierman, A., "Guidelines for Authors and Reviewers of YANG
               Data Model Documents", RFC 6087, DOI 10.17487/RFC6087,
               January 2011, <https://www.rfc-editor.org/info/rfc6087>.
@@ -1026,42 +1005,7 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.         Expires May 13, 2018                 [Page 19]
+Boucadair, et al.         Expires May 14, 2018                 [Page 18]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -1117,7 +1061,7 @@ Appendix B.  AFTR Examples
 
 
 
-Boucadair, et al.         Expires May 13, 2018                 [Page 20]
+Boucadair, et al.         Expires May 14, 2018                 [Page 19]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -1173,7 +1117,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.         Expires May 13, 2018                 [Page 21]
+Boucadair, et al.         Expires May 14, 2018                 [Page 20]
 
 Internet-Draft                DS-Lite YANG                 November 2017
 
@@ -1229,4 +1173,4 @@ Internet-Draft                DS-Lite YANG                 November 2017
 
 
 
-Boucadair, et al.         Expires May 13, 2018                 [Page 22]
+Boucadair, et al.         Expires May 14, 2018                 [Page 21]

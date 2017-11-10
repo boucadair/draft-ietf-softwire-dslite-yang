@@ -174,7 +174,7 @@
 
       <t>This document follows the guidelines of <xref
       target="RFC6087"></xref>, uses the common YANG types defined in <xref
-      target="RFC6991"></xref>, and adopts Network Management Datastore
+      target="RFC6991"></xref>, and adopts the Network Management Datastore
       Architecture (NMDA).</t>
 
       <section title="Terminology">
@@ -230,52 +230,29 @@
           IPv4-in-IPv6 packets (aftr-ipv6-address).</t>
 
           <t>An IPv4 address that is used by the AFTR for troubleshooting
-          purposes (aftr-ipv4-address): According to <xref
-          target="RFC6333"></xref>, that address can be used to report ICMP
-          problems and will appear in traceroute outputs.</t>
+          purposes (aftr-ipv4-address).</t>
 
-          <t>The tunnel MTU to avoid fragmentation (tunnel-mtu): Since using
-          an IPv4-in-IPv6 encapsulation to carry IPv4 traffic over IPv6
-          reduces the effective MTU of the datagram, operators should be able
-          to increase the MTU size by at least 40 bytes to accommodate both
-          the IPv6 encapsulation header and the IPv4 datagram without
-          fragmenting the IPv6 packet (Section 2.2 of <xref
-          target="RFC6908"></xref>).</t>
+          <t>The tunnel MTU, used to avoid fragmentation (tunnel-mtu).</t>
 
           <t>A policy to limit the number of DS-Lite softwires per subscriber
-          (max-softwire-per-subscriber): This policy aims to prevent a
-          misbehaving subscriber from mounting several DS-Lite softwires that
-          would consume additional AFTR resources (e.g., get more external
-          ports if the quota were enforced on a per-softwire basis, consume
-          extra processing due to a large number of active softwires) <xref
-          target="RFC7785"></xref>.</t>
+          (max-softwire-per-subscriber).</t>
 
-          <t>A DSCP marking policy to be followed when
-          encapsulating/decapsulating packets (v6-v4-dscp-preservation):
-          Section 2.10 of <xref target="RFC6908"></xref> discusses the uniform
-          model which assumes that implementations of this model copy the DSCP
-          value to the outer IP header at encapsulation and copy the outer
-          header's DSCP value to the inner IP header at decapsulation.
-          Operators should configure the AFTR so that it copies the DSCP value
-          in the IPv4 header to the Traffic Class field in the IPv6 header,
-          and vice versa.</t>
+          <t>A policy to instruct the AFTR whether it must preserve DSCP
+          marking when encapsulating/decapsulating packets
+          (v6-v4-dscp-preservation).</t>
         </list></t>
 
       <t>In addition, the AFTR YANG module augments the NAT YANG module
       (policy, in particular) with the following:<list style="symbols">
           <t>A policy to instruct the AFTR whether a state can be
-          automatically migrated (state-migrate): This policy avoids stale
-          mappings at the AFTR and minimizes the risk of service disruption
-          for subscribers. According to <xref target="RFC7785"></xref>, the
-          AFTR should migrate existing state to be bound to the new IPv6
-          address in the event a new IPv6 address is assigned to the B4
-          element. This operation ensures that traffic destined to the
-          previous B4's IPv6 address will be redirected to the newer B4's IPv6
-          address.</t>
+          automatically migrated (state-migrate). </t>
+
+          <t>Further, in order to prevent a denial-of-service by frequently
+          changing the source IPv6 address, 'b4-address-change-limit' is used
+          to rate-lmite such changes. </t>
 
           <t>An instruction to rewrite the TCP Maximum Segment Size (MSS)
-          option (mss-clamping) to avoid TCP fragmentation (Section 6.3 of
-          <xref target="RFC6333"></xref>).</t>
+          option (mss-clamping) to avoid TCP fragmentation.</t>
         </list></t>
 
       <t>Given that the NAPT table of the AFTR element is extended to include
@@ -320,7 +297,8 @@
     +--rw max-softwire-per-subscriber?   uint8
     +--rw v6-v4-dscp-preservation?       boolean
   augment /nat:nat/nat:instances/nat:instance/nat:policy:
-    +--rw state-migrate?   boolean
+    +--rw state-migrate?             boolean
+    +--rw b4-address-change-limit?   uint32
     +--rw mss-clamping
        +--rw enable?      boolean
        +--rw mss-value?   uint16
@@ -537,8 +515,28 @@ augment "/nat:nat/nat:instances/"+
     reference
       "RFC 7785: Recommendations for Prefix Binding in the Context
                  of Softwire Dual-Stack Lite"; 
-  }     
-    
+  }
+
+  leaf b4-address-change-limit {
+    type uint32;
+    units "seconds";
+    default '1800';
+    description
+      "Minimum number of seconds between successive B4's IPv6 address
+       change from the same prefix.
+
+       Changing the source B4's IPv6 address may be used as an attack
+       vector.  Packets with a new B4's IPv6 address from the same 
+       prefix should be rate-limited.
+
+       It is recommended to set this rate limit to 30 minutes; other
+       values can be set on a per-deployment basis.";
+
+    reference
+      "RFC 7785: Recommendations for Prefix Binding in the Context
+                 of Softwire Dual-Stack Lite"; 
+  }      
+   
   container mss-clamping {
     description 
       "MSS rewriting configuration to avoid IPv6 fragmentation.";
@@ -573,18 +571,24 @@ augment "/nat:nat/nat:instances/nat:instance/"+
   }
 
   leaf v6-dscp {
+    when "/if:interfaces/if:interface/" + 
+          "dslite-aftr:v6-v4-dscp-preservation='true'";
     type uint8;
     description 
       "DSCP value used at the softwire level (i.e., IPv6 header)."; 
    }
 
    leaf internal-v4-dscp {
+    when "/if:interfaces/if:interface/" + 
+          "dslite-aftr:v6-v4-dscp-preservation='true'";
      type uint8;
      description 
        "DSCP value of the encapsulated IPv4 packet."; 
    }
 
    leaf external-v4-dscp {
+    when "/if:interfaces/if:interface/" + 
+          "dslite-aftr:v6-v4-dscp-preservation='true'";
      type uint8;
      description 
        "DSCP value of the translated IPv4 packet as marked by
@@ -756,20 +760,23 @@ augment "/if:interfaces/if:interface" {
           severe implications on privacy.</t>
 
           <t>Set the MTU to a low value which may increase the number of
-          fragments (tunnel-mtu for both B4 and AFTR). </t>
+          fragments (tunnel-mtu for both B4 and AFTR).</t>
 
           <t>Set 'max-softwire-per-subscriber' to an arbitrary high value,
           which will be exploited by a misbehaving user to grab more resources
           (by mounting as many softwires as required to get more external IP
           addresses/ports) or to perform a Denial-of-Service on the AFTR by
-          mounting a massive number of softwires. </t>
+          mounting a massive number of softwires.</t>
 
           <t>Set 'state-migrate' to 'false' on the AFTR. This action may lead
           to a service degradation for the users.</t>
 
+          <t>Set 'b4-address-change-limit" to an arbitrary low value can ease
+          DoS attacks based on frequent change of B4 IPv6 address. </t>
+
           <t>Set 'v6-v4-dscp-preservation' to 'false" may lead to a service
           degradation if some policies are applied on the network based on the
-          DSCP value. </t>
+          DSCP value.</t>
         </list></t>
 
       <t>Additional security considerations are discussed in <xref
@@ -812,7 +819,7 @@ augment "/if:interfaces/if:interface" {
       Jethanandani provided an early yangdoctors review; many thanks to
       him.</t>
 
-      <t>Many thanks to Ian Farrer for the review and comments</t>
+      <t>Many thanks to Ian Farrer for the review and comments.</t>
     </section>
   </middle>
 
