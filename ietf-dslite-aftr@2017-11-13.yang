@@ -8,6 +8,7 @@ module ietf-dslite-aftr {
   import ietf-interfaces { prefix if; }
   import iana-if-type { prefix ianaift; }
   import ietf-nat {prefix nat;}
+  import ietf-yang-types { prefix yang; }
     
   organization "IETF Softwire Working Group";
 
@@ -52,7 +53,7 @@ module ietf-dslite-aftr {
     description
       "Initial revision.";
     reference
-      "RFC XXXX: YANG Data Modules for the DS-Lite";
+      "RFC XXXX: YANG Data Modules for Dual-Stack Lite (DS-Lite)";
   }
 
 augment "/if:interfaces/if:interface" {
@@ -210,14 +211,26 @@ augment "/nat:nat/nat:instances/nat:instance/"+
             "nat:mapping-table/nat:mapping-entry"{
   description
     "Augments the NAPT44 mapping table with DS-Lite specifics."; 
-  
-  leaf b4-ipv6-address {
-    type inet:ipv6-address;      
+
+  container b4-ipv6-address {
     description 
-      "Corresponds to the IPv6 address used by the B4 element.";
-    reference
-      "RFC 6333: Dual-Stack Lite Broadband Deployments Following
-                 IPv4 Exhaustion"; 
+      "Records the IPv6 address used by the B4 element and the last 
+       time that address changed.";
+
+    leaf address {
+      type inet:ipv6-address;
+      description 
+        "Corresponds to the IPv6 address used by the B4 element.";
+      reference
+        "RFC 6333: Dual-Stack Lite Broadband Deployments Following
+                   IPv4 Exhaustion"; 
+    } 
+  
+    leaf last-address-change   {
+      type yang:date-and-time;      
+      description 
+        "Records the last time when the address changed.";
+    }
   }
 
   leaf v6-dscp {
@@ -245,4 +258,34 @@ augment "/nat:nat/nat:instances/nat:instance/"+
         the AFTR."; 
    }
  }
+
+  notification too-fast-b4-address-change-event {
+    description
+      "Notifications must be generated when a B4's IPv6 address change
+       is discarded because of b4-address-change-limit.";
+
+    leaf id {    
+      type leafref {
+        path "/nat:nat/nat:instances/nat:instance/nat:id";
+      }
+      mandatory true; 
+      description
+        "NAT instance identifier.";
+    }
+
+    leaf policy-id {    
+      type leafref {
+        path "/nat:nat/nat:instances/nat:instance/nat:policy/nat:id";
+      }
+      mandatory true; 
+      description
+        "Policy Identifier.";
+    }
+
+    leaf address {
+      type inet:ipv6-address;
+      description
+        "B4's IPv6 address.";
+    }
+  }
 }
